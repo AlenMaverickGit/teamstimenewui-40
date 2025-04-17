@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Download, UsersRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -146,7 +145,7 @@ const ResourceDashboard: React.FC = () => {
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-semibold text-gray-800 flex items-center">
           <UsersRound className="mr-2 h-5 w-5 text-primary" />
-          Project-wise Resource Allocation
+          Project-Wise Resource Allocation
         </h2>
         <Button
           className="shadow-neon transition-all hover:translate-y-[-2px]"
@@ -158,42 +157,50 @@ const ResourceDashboard: React.FC = () => {
       </div>
 
       {/* Desktop Table View */}
+
       <div className="rounded-xl border border-gray-200 hidden md:block overflow-hidden">
         <div className="h-[500px] relative">
-          <div className="sticky top-0 bg-card z-10 shadow-sm">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b">
-                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Project</th>
-                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Employee Name</th>
-                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Role</th>
-                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Start Date</th>
-                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">End Date</th>
-                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Rate ($)</th>
-                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Cost ($)</th>
-                </tr>
-              </thead>
-            </table>
-          </div>
-          <ScrollArea className="h-[450px]">
-            <table className="w-full">
-              <tbody>
+          <Table className="w-full table-fixed text-sm text-left">
+            <TableHeader className="sticky top-[72px] bg-card z-10 shadow-sm">
+              <TableRow>
+                <TableHead className="bg-card px-4 py-3">Project</TableHead>
+                <TableHead className="bg-card px-4 py-3">
+                  Employee Name
+                </TableHead>
+                <TableHead className="bg-card px-4 py-3">Role</TableHead>
+                <TableHead className="bg-card px-4 py-3">Start Date</TableHead>
+                <TableHead className="bg-card px-4 py-3">End Date</TableHead>
+                <TableHead className="bg-card px-4 py-3">Rate ($)</TableHead>
+                <TableHead className="bg-card px-4 py-3">Cost ($)</TableHead>
+              </TableRow>
+            </TableHeader>
+          </Table>
+
+          {/* Scrollable body table */}
+          <ScrollArea className="h-[428px] w-full">
+            <Table className="w-full table-fixed text-sm text-left">
+              <TableBody>
                 {mockData.map((entry, index) => (
-                  <tr 
-                    key={index} 
-                    className="border-b transition-colors hover:bg-muted/50"
-                  >
-                    <td className="p-4 align-middle">{entry.project}</td>
-                    <td className="p-4 align-middle">{entry.employeeName}</td>
-                    <td className="p-4 align-middle">{entry.role}</td>
-                    <td className="p-4 align-middle">{entry.startDate}</td>
-                    <td className="p-4 align-middle">{entry.endDate}</td>
-                    <td className="p-4 align-middle">{entry.rate.toFixed(2)}</td>
-                    <td className="p-4 align-middle">{entry.cost.toFixed(2)}</td>
-                  </tr>
+                  <TableRow key={index}>
+                    <TableCell className="px-4 py-3">{entry.project}</TableCell>
+                    <TableCell className="px-4 py-3">
+                      {entry.employeeName}
+                    </TableCell>
+                    <TableCell className="px-4 py-3">{entry.role}</TableCell>
+                    <TableCell className="px-4 py-3">
+                      {entry.startDate}
+                    </TableCell>
+                    <TableCell className="px-4 py-3">{entry.endDate}</TableCell>
+                    <TableCell className="px-4 py-3">
+                      {entry.rate.toFixed(2)}
+                    </TableCell>
+                    <TableCell className="px-4 py-3">
+                      {entry.cost.toFixed(2)}
+                    </TableCell>
+                  </TableRow>
                 ))}
-              </tbody>
-            </table>
+              </TableBody>
+            </Table>
           </ScrollArea>
         </div>
       </div>
