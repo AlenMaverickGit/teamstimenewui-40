@@ -160,35 +160,40 @@ const ResourceDashboard: React.FC = () => {
       {/* Desktop Table View */}
       <div className="rounded-xl border border-gray-200 hidden md:block overflow-hidden">
         <div className="h-[500px] relative">
-          <Table>
-            <TableHeader className="sticky top-0 bg-card z-10 shadow-sm">
-              <TableRow>
-                <TableHead className="bg-card">Project</TableHead>
-                <TableHead className="bg-card">Employee Name</TableHead>
-                <TableHead className="bg-card">Role</TableHead>
-                <TableHead className="bg-card">Start Date</TableHead>
-                <TableHead className="bg-card">End Date</TableHead>
-                <TableHead className="bg-card">Rate ($)</TableHead>
-                <TableHead className="bg-card">Cost ($)</TableHead>
-              </TableRow>
-            </TableHeader>
-          </Table>
+          <div className="sticky top-0 bg-card z-10 shadow-sm">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b">
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Project</th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Employee Name</th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Role</th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Start Date</th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">End Date</th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Rate ($)</th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Cost ($)</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
           <ScrollArea className="h-[450px]">
-            <Table>
-              <TableBody>
+            <table className="w-full">
+              <tbody>
                 {mockData.map((entry, index) => (
-                  <TableRow key={index}>
-                    <TableCell>{entry.project}</TableCell>
-                    <TableCell>{entry.employeeName}</TableCell>
-                    <TableCell>{entry.role}</TableCell>
-                    <TableCell>{entry.startDate}</TableCell>
-                    <TableCell>{entry.endDate}</TableCell>
-                    <TableCell>{entry.rate.toFixed(2)}</TableCell>
-                    <TableCell>{entry.cost.toFixed(2)}</TableCell>
-                  </TableRow>
+                  <tr 
+                    key={index} 
+                    className="border-b transition-colors hover:bg-muted/50"
+                  >
+                    <td className="p-4 align-middle">{entry.project}</td>
+                    <td className="p-4 align-middle">{entry.employeeName}</td>
+                    <td className="p-4 align-middle">{entry.role}</td>
+                    <td className="p-4 align-middle">{entry.startDate}</td>
+                    <td className="p-4 align-middle">{entry.endDate}</td>
+                    <td className="p-4 align-middle">{entry.rate.toFixed(2)}</td>
+                    <td className="p-4 align-middle">{entry.cost.toFixed(2)}</td>
+                  </tr>
                 ))}
-              </TableBody>
-            </Table>
+              </tbody>
+            </table>
           </ScrollArea>
         </div>
       </div>
