@@ -158,35 +158,39 @@ const ResourceDashboard: React.FC = () => {
       </div>
 
       {/* Desktop Table View */}
-      <div className="rounded-xl border border-gray-200 hidden md:block">
-        <ScrollArea className="h-[500px]">
+      <div className="rounded-xl border border-gray-200 hidden md:block overflow-hidden">
+        <div className="h-[500px] relative">
           <Table>
-            <TableHeader className="sticky top-0 bg-card z-10">
+            <TableHeader className="sticky top-0 bg-card z-10 shadow-sm">
               <TableRow>
-                <TableHead>Project</TableHead>
-                <TableHead>Employee Name</TableHead>
-                <TableHead>Role</TableHead>
-                <TableHead>Start Date</TableHead>
-                <TableHead>End Date</TableHead>
-                <TableHead>Rate ($)</TableHead>
-                <TableHead>Cost ($)</TableHead>
+                <TableHead className="bg-card">Project</TableHead>
+                <TableHead className="bg-card">Employee Name</TableHead>
+                <TableHead className="bg-card">Role</TableHead>
+                <TableHead className="bg-card">Start Date</TableHead>
+                <TableHead className="bg-card">End Date</TableHead>
+                <TableHead className="bg-card">Rate ($)</TableHead>
+                <TableHead className="bg-card">Cost ($)</TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody>
-              {mockData.map((entry, index) => (
-                <TableRow key={index}>
-                  <TableCell>{entry.project}</TableCell>
-                  <TableCell>{entry.employeeName}</TableCell>
-                  <TableCell>{entry.role}</TableCell>
-                  <TableCell>{entry.startDate}</TableCell>
-                  <TableCell>{entry.endDate}</TableCell>
-                  <TableCell>{entry.rate.toFixed(2)}</TableCell>
-                  <TableCell>{entry.cost.toFixed(2)}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
           </Table>
-        </ScrollArea>
+          <ScrollArea className="h-[450px]">
+            <Table>
+              <TableBody>
+                {mockData.map((entry, index) => (
+                  <TableRow key={index}>
+                    <TableCell>{entry.project}</TableCell>
+                    <TableCell>{entry.employeeName}</TableCell>
+                    <TableCell>{entry.role}</TableCell>
+                    <TableCell>{entry.startDate}</TableCell>
+                    <TableCell>{entry.endDate}</TableCell>
+                    <TableCell>{entry.rate.toFixed(2)}</TableCell>
+                    <TableCell>{entry.cost.toFixed(2)}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </ScrollArea>
+        </div>
       </div>
 
       {/* Mobile Accordion View */}
