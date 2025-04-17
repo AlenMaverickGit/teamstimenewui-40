@@ -1,8 +1,15 @@
-
 import React, { useState } from "react";
 import { Download, UsersRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { generateResourceReport } from "../../utils/generateReport";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 type ResourceAllocation = {
   project: string;
@@ -69,41 +76,32 @@ const ResourceDashboard: React.FC = () => {
 
       {/* Desktop Table View */}
       <div className="rounded-xl border border-gray-200 hidden md:block">
-        <table className="min-w-full text-sm text-left">
-          <thead className="bg-[#f6f7ff]">
-            <tr className="text-gray-800 text-sm font-medium border-b border-gray-300">
-              {[
-                "Project",
-                "Employee Name",
-                "Role",
-                "Start Date",
-                "End Date",
-                "Rate ($)",
-                "Cost ($)",
-              ].map((title) => (
-                <th
-                  key={title}
-                  className="sticky top-[72px] bg-gradient-to-br from-primary/10 to-primary/5 z-10 px-4 py-3 text-left text-muted-foreground uppercase tracking-wider text-xs font-semibold"
-                >
-                  {title}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-100 bg-white">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Project</TableHead>
+              <TableHead>Employee Name</TableHead>
+              <TableHead>Role</TableHead>
+              <TableHead>Start Date</TableHead>
+              <TableHead>End Date</TableHead>
+              <TableHead>Rate ($)</TableHead>
+              <TableHead>Cost ($)</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
             {mockData.map((entry, index) => (
-              <tr key={index} className="hover:bg-gray-50 transition">
-                <td className="px-4 py-3">{entry.project}</td>
-                <td className="px-4 py-3">{entry.employeeName}</td>
-                <td className="px-4 py-3">{entry.role}</td>
-                <td className="px-4 py-3">{entry.startDate}</td>
-                <td className="px-4 py-3">{entry.endDate}</td>
-                <td className="px-4 py-3 ">{entry.rate.toFixed(2)}</td>
-                <td className="px-4 py-3 ">{entry.cost.toFixed(2)}</td>
-              </tr>
+              <TableRow key={index}>
+                <TableCell>{entry.project}</TableCell>
+                <TableCell>{entry.employeeName}</TableCell>
+                <TableCell>{entry.role}</TableCell>
+                <TableCell>{entry.startDate}</TableCell>
+                <TableCell>{entry.endDate}</TableCell>
+                <TableCell>{entry.rate.toFixed(2)}</TableCell>
+                <TableCell>{entry.cost.toFixed(2)}</TableCell>
+              </TableRow>
             ))}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       </div>
 
       {/* Mobile Accordion View */}
