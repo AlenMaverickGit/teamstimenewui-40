@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Download, UsersRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -70,7 +71,7 @@ const ResourceDashboard: React.FC = () => {
       <div className="rounded-xl border border-gray-200 hidden md:block">
         <table className="min-w-full text-sm text-left">
           <thead className="bg-[#f6f7ff]">
-            <tr className="text-gray-800 text-sm font-semibold border-b border-gray-300">
+            <tr className="text-gray-800 text-sm font-medium border-b border-gray-300">
               {[
                 "Project",
                 "Employee Name",
@@ -82,7 +83,7 @@ const ResourceDashboard: React.FC = () => {
               ].map((title) => (
                 <th
                   key={title}
-                  className="sticky top-[72px] bg-[#f6f7ff] z-10 px-4 py-3 text-left"
+                  className="sticky top-[72px] bg-gradient-to-br from-primary/10 to-primary/5 z-10 px-4 py-3 text-left text-muted-foreground uppercase tracking-wider text-xs font-semibold"
                 >
                   {title}
                 </th>
