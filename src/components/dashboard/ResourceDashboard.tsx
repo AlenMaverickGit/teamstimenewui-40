@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Download, UsersRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -10,6 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 type ResourceAllocation = {
   project: string;
@@ -49,6 +51,87 @@ const mockData: ResourceAllocation[] = [
     rate: 110.0,
     cost: 176000.0,
   },
+  {
+    project: "Mobile App Redesign",
+    employeeName: "Emily Wilson",
+    role: "UX Researcher",
+    startDate: "15-02-2024",
+    endDate: "30-07-2024",
+    rate: 90.0,
+    cost: 108000.0,
+  },
+  {
+    project: "E-commerce Platform",
+    employeeName: "David Johnson",
+    role: "Backend Developer",
+    startDate: "01-03-2024",
+    endDate: "31-08-2024",
+    rate: 115.0,
+    cost: 138000.0,
+  },
+  {
+    project: "CRM Integration",
+    employeeName: "Sarah Williams",
+    role: "Business Analyst",
+    startDate: "15-03-2024",
+    endDate: "15-11-2024",
+    rate: 105.0,
+    cost: 157500.0,
+  },
+  {
+    project: "AI Chatbot",
+    employeeName: "Alex Chen",
+    role: "ML Engineer",
+    startDate: "01-04-2024",
+    endDate: "31-10-2024",
+    rate: 130.0,
+    cost: 195000.0,
+  },
+  {
+    project: "Data Visualization Dashboard",
+    employeeName: "Morgan Lee",
+    role: "Data Scientist",
+    startDate: "15-04-2024",
+    endDate: "15-09-2024",
+    rate: 125.0,
+    cost: 156250.0,
+  },
+  {
+    project: "Payment Gateway Integration",
+    employeeName: "Chris Taylor",
+    role: "Full Stack Developer",
+    startDate: "01-05-2024",
+    endDate: "30-11-2024",
+    rate: 118.0,
+    cost: 177000.0,
+  },
+  {
+    project: "Whizible Version 24",
+    employeeName: "Priya Patel",
+    role: "QA Engineer",
+    startDate: "15-01-2024",
+    endDate: "31-12-2024",
+    rate: 90.0,
+    cost: 180000.0,
+  },
+  {
+    project: "Session Project",
+    employeeName: "James Wilson",
+    role: "Backend Developer",
+    startDate: "01-02-2024",
+    endDate: "30-09-2024",
+    rate: 115.0,
+    cost: 172500.0,
+  },
+  {
+    project: "Client Portal",
+    employeeName: "Linda Garcia",
+    role: "UI Designer",
+    startDate: "15-02-2024",
+    endDate: "31-10-2024",
+    rate: 95.0,
+    cost: 142500.0,
+  },
 ];
 
 const ResourceDashboard: React.FC = () => {
@@ -76,32 +159,34 @@ const ResourceDashboard: React.FC = () => {
 
       {/* Desktop Table View */}
       <div className="rounded-xl border border-gray-200 hidden md:block">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Project</TableHead>
-              <TableHead>Employee Name</TableHead>
-              <TableHead>Role</TableHead>
-              <TableHead>Start Date</TableHead>
-              <TableHead>End Date</TableHead>
-              <TableHead>Rate ($)</TableHead>
-              <TableHead>Cost ($)</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {mockData.map((entry, index) => (
-              <TableRow key={index}>
-                <TableCell>{entry.project}</TableCell>
-                <TableCell>{entry.employeeName}</TableCell>
-                <TableCell>{entry.role}</TableCell>
-                <TableCell>{entry.startDate}</TableCell>
-                <TableCell>{entry.endDate}</TableCell>
-                <TableCell>{entry.rate.toFixed(2)}</TableCell>
-                <TableCell>{entry.cost.toFixed(2)}</TableCell>
+        <ScrollArea className="h-[500px]">
+          <Table>
+            <TableHeader className="sticky top-0 bg-card z-10">
+              <TableRow>
+                <TableHead>Project</TableHead>
+                <TableHead>Employee Name</TableHead>
+                <TableHead>Role</TableHead>
+                <TableHead>Start Date</TableHead>
+                <TableHead>End Date</TableHead>
+                <TableHead>Rate ($)</TableHead>
+                <TableHead>Cost ($)</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {mockData.map((entry, index) => (
+                <TableRow key={index}>
+                  <TableCell>{entry.project}</TableCell>
+                  <TableCell>{entry.employeeName}</TableCell>
+                  <TableCell>{entry.role}</TableCell>
+                  <TableCell>{entry.startDate}</TableCell>
+                  <TableCell>{entry.endDate}</TableCell>
+                  <TableCell>{entry.rate.toFixed(2)}</TableCell>
+                  <TableCell>{entry.cost.toFixed(2)}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </ScrollArea>
       </div>
 
       {/* Mobile Accordion View */}
