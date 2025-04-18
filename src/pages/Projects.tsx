@@ -10,7 +10,7 @@ const ProjectsPage: React.FC = () => {
     <div className="container py-6 animate-fade-in">
       <BreadcrumbNav />
       <div className="flex flex-col gap-6">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4">
           <h1 className="text-responsive-3xl font-bold text-gradient">Projects</h1>
           <div className="flex gap-4">
             <Button className="gap-2 shadow-neon transition-all hover:translate-y-[-2px]">
