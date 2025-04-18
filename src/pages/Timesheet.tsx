@@ -11,8 +11,8 @@ const Timesheet: React.FC = () => {
       <BreadcrumbNav />
       <div className="flex flex-col gap-6">
         <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold text-gradient">Timesheet</h1>
-          <div className="text-sm text-muted-foreground px-4 py-2 rounded-full bg-card/50 backdrop-blur-sm border border-border/50 flex items-center gap-2">
+          <h1 className="text-responsive-3xl font-bold text-gradient">Timesheet</h1>
+          <div className="text-responsive-sm text-muted-foreground px-4 py-2 rounded-full bg-card/50 backdrop-blur-sm border border-border/50 flex items-center gap-2">
             <CalendarClock className="h-4 w-4" />
             <span>Week: {getWeekRangeText()}</span>
           </div>
@@ -20,8 +20,8 @@ const Timesheet: React.FC = () => {
         
         <Card>
           <CardHeader>
-            <CardTitle>Time Tracking</CardTitle>
-            <CardDescription>
+            <CardTitle className="text-responsive-xl">Time Tracking</CardTitle>
+            <CardDescription className="text-responsive-base">
               Record time spent on your assigned tasks and projects. Compare actual time against planned estimates.
             </CardDescription>
           </CardHeader>

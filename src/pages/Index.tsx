@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -20,15 +19,14 @@ const Index = () => {
       <main>
         {/* Hero Section */}
         <section className="bg-gradient-to-br from-primary to-secondary text-white py-20 md:py-28 relative overflow-hidden">
-          {/* Abstract background shapes */}
           <div className="absolute inset-0 opacity-10">
             <div className="absolute top-20 left-10 w-64 h-64 rounded-full bg-white/20 blur-3xl"></div>
             <div className="absolute bottom-10 right-10 w-80 h-80 rounded-full bg-white/20 blur-3xl"></div>
           </div>
           
           <div className="container mx-auto px-4 text-center relative z-10">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">Work Smarter, Track Better</h1>
-            <p className="text-xl md:text-2xl mb-10 max-w-3xl mx-auto opacity-90">
+            <h1 className="text-responsive-4xl font-bold mb-6 leading-tight">Work Smarter, Track Better</h1>
+            <p className="text-responsive-xl mb-10 max-w-3xl mx-auto opacity-90">
               Powerful timesheet solution for global teams to track tasks, monitor progress, and deliver projects on time.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
@@ -40,7 +38,6 @@ const Index = () => {
               </Button>
             </div>
             
-            {/* Hero image */}
             <div className="mt-12 md:mt-16 max-w-4xl mx-auto rounded-lg overflow-hidden shadow-2xl glass-effect border border-white/20">
               <img 
                 src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2000&auto=format&crop=entropy&fit=crop" 
@@ -51,13 +48,13 @@ const Index = () => {
             
             <div className="mt-8 hidden md:block">
               <div className="bg-white/10 backdrop-blur-md rounded-lg p-4 inline-block">
-                <p className="text-white/90 text-sm">Trusted by freelancers and companies worldwide</p>
+                <p className="text-responsive-sm text-white/90">Trusted by freelancers and companies worldwide</p>
                 <div className="flex items-center justify-center gap-6 mt-2">
-                  <p className="text-lg font-medium">5,000+ Users</p>
+                  <p className="text-responsive-lg font-medium">5,000+ Users</p>
                   <div className="w-px h-6 bg-white/20"></div>
-                  <p className="text-lg font-medium">120+ Countries</p>
+                  <p className="text-responsive-lg font-medium">120+ Countries</p>
                   <div className="w-px h-6 bg-white/20"></div>
-                  <p className="text-lg font-medium">99.9% Uptime</p>
+                  <p className="text-responsive-lg font-medium">99.9% Uptime</p>
                 </div>
               </div>
             </div>
@@ -68,8 +65,8 @@ const Index = () => {
         <section className="py-16 bg-background">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold mb-4">Built for the Global Gig Economy</h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              <h2 className="text-responsive-3xl font-bold mb-4">Built for the Global Gig Economy</h2>
+              <p className="text-responsive-lg text-muted-foreground max-w-2xl mx-auto">
                 Track time, manage projects, and collaborate with your team - no matter where they are in the world.
               </p>
             </div>
@@ -117,7 +114,7 @@ const Index = () => {
         {/* Testimonials */}
         <section className="py-16 bg-muted">
           <div className="container mx-auto px-4 text-center">
-            <h2 className="text-3xl font-bold mb-12">Trusted by Professionals Worldwide</h2>
+            <h2 className="text-responsive-3xl font-bold mb-12">Trusted by Professionals Worldwide</h2>
             
             <Carousel className="w-full max-w-5xl mx-auto">
               <CarouselContent>
@@ -150,13 +147,13 @@ const Index = () => {
           </div>
         </section>
 
-        {/* CTA Section with App Screenshot */}
+        {/* CTA Section */}
         <section className="py-16 bg-gradient-to-r from-primary/90 to-accent text-white">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
               <div className="text-center md:text-left">
-                <h2 className="text-3xl font-bold mb-6">Ready to transform how you track time?</h2>
-                <p className="text-xl mb-8">
+                <h2 className="text-responsive-3xl font-bold mb-6">Ready to transform how you track time?</h2>
+                <p className="text-responsive-xl mb-8">
                   Join thousands of professionals who use TeamsTime to deliver projects on time and within budget.
                 </p>
                 <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-4">
@@ -169,7 +166,7 @@ const Index = () => {
                     See Pricing
                   </Button>
                 </div>
-                <p className="mt-4 text-sm opacity-90">No credit card required. 14-day free trial.</p>
+                <p className="mt-4 text-responsive-sm opacity-90">No credit card required. 14-day free trial.</p>
               </div>
               <div className="hidden md:block">
                 <div className="glass-effect p-2 rounded-lg shadow-xl">
@@ -192,7 +189,7 @@ const Index = () => {
             <div className="col-span-1">
               <div className="flex items-center mb-4">
                 <Clock className="mr-2" />
-                <span className="text-xl font-bold">TeamsTime</span>
+                <span className="text-responsive-lg font-bold">TeamsTime</span>
               </div>
               <p className="text-gray-400 mb-4">
                 Modern time tracking for the global workforce.
@@ -217,7 +214,7 @@ const Index = () => {
             </div>
             
             <div className="col-span-1">
-              <h3 className="text-lg font-semibold mb-4">Product</h3>
+              <h3 className="text-responsive-lg font-semibold mb-4">Product</h3>
               <ul className="space-y-2">
                 <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Features</a></li>
                 <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Pricing</a></li>
@@ -227,7 +224,7 @@ const Index = () => {
             </div>
             
             <div className="col-span-1">
-              <h3 className="text-lg font-semibold mb-4">Resources</h3>
+              <h3 className="text-responsive-lg font-semibold mb-4">Resources</h3>
               <ul className="space-y-2">
                 <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Documentation</a></li>
                 <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Guides</a></li>
@@ -237,7 +234,7 @@ const Index = () => {
             </div>
             
             <div className="col-span-1">
-              <h3 className="text-lg font-semibold mb-4">Company</h3>
+              <h3 className="text-responsive-lg font-semibold mb-4">Company</h3>
               <ul className="space-y-2">
                 <li><a href="#" className="text-gray-400 hover:text-white transition-colors">About</a></li>
                 <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Blog</a></li>

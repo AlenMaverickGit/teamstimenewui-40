@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Download, Filter, UsersRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -148,7 +147,7 @@ const ResourceDashboard: React.FC = () => {
   return (
     <div className="bg-white p-4 sm:p-6 rounded-2xl shadow-md">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-3">
-        <h2 className="text-xl font-semibold text-gray-800 flex items-center">
+        <h2 className="text-responsive-xl font-semibold text-gray-800 flex items-center">
           <UsersRound className="mr-2 h-5 w-5 text-primary" />
           Project-Wise Resource Allocation
         </h2>
@@ -164,7 +163,6 @@ const ResourceDashboard: React.FC = () => {
               <div className="py-4">
                 <h3 className="text-lg font-medium mb-4">Filter Resources</h3>
                 <div className="space-y-4">
-                  {/* Filter options would go here */}
                   <p className="text-sm text-muted-foreground">
                     Filter options will be implemented here.
                   </p>
@@ -187,7 +185,7 @@ const ResourceDashboard: React.FC = () => {
       <div className="rounded-xl border border-gray-200 hidden md:block overflow-hidden">
         <div className="h-[500px] relative">
           <div className="sticky top-0 z-20 bg-card w-full">
-            <Table className="w-full table-fixed text-sm text-left">
+            <Table className="w-full table-fixed text-responsive-sm text-left">
               <TableHeader>
                 <TableRow>
                   <TableHead className="w-[20%] px-4 py-3">Project</TableHead>
@@ -203,7 +201,7 @@ const ResourceDashboard: React.FC = () => {
           </div>
 
           <ScrollArea className="h-[468px]">
-            <Table className="w-full table-fixed text-sm text-left">
+            <Table className="w-full table-fixed text-responsive-sm text-left">
               <TableBody>
                 {mockData.map((entry, index) => (
                   <TableRow key={index} className="hover:bg-muted/30">
@@ -230,11 +228,11 @@ const ResourceDashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* Tablet Responsive View (sm to md) */}
+      {/* Tablet View */}
       <div className="hidden sm:block md:hidden">
         <div className="rounded-xl border border-gray-200 overflow-hidden">
           <ScrollArea className="h-[500px]">
-            <table className="w-full text-sm text-left">
+            <table className="w-full text-responsive-sm text-left">
               <thead className="sticky top-0 bg-card z-10">
                 <tr>
                   <th className="px-3 py-3">Project / Employee</th>
@@ -276,15 +274,15 @@ const ResourceDashboard: React.FC = () => {
               onClick={() => toggleAccordion(index)}
             >
               <div className="flex flex-col">
-                <span className="truncate max-w-[200px]">{entry.project}</span>
-                <span className="text-xs text-muted-foreground truncate max-w-[200px]">
+                <span className="text-responsive-base truncate max-w-[200px]">{entry.project}</span>
+                <span className="text-responsive-sm text-muted-foreground truncate max-w-[200px]">
                   {entry.employeeName}
                 </span>
               </div>
               <span>{openIndex === index ? "−" : "+"}</span>
             </button>
             {openIndex === index && (
-              <div className="px-4 py-3 text-sm bg-white space-y-2 rounded-b-xl divide-y divide-gray-100">
+              <div className="px-4 py-3 text-responsive-sm bg-white space-y-2 rounded-b-xl divide-y divide-gray-100">
                 <div className="pb-2">
                   <p className="text-xs text-muted-foreground">Role</p>
                   <p className="font-medium">{entry.role}</p>
