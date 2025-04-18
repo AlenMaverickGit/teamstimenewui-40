@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -115,4 +114,39 @@
 
 .text-gradient {
   @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
+}
+
+@layer utilities {
+  /* Responsive Typography Utilities */
+  .text-responsive-xs {
+    @apply text-xs-mobile sm:text-xs;
+  }
+  
+  .text-responsive-sm {
+    @apply text-sm-mobile sm:text-sm;
+  }
+  
+  .text-responsive-base {
+    @apply text-base-mobile sm:text-base;
+  }
+  
+  .text-responsive-lg {
+    @apply text-lg-mobile sm:text-lg;
+  }
+  
+  .text-responsive-xl {
+    @apply text-xl-mobile sm:text-xl;
+  }
+  
+  .text-responsive-2xl {
+    @apply text-xl sm:text-2xl;
+  }
+  
+  .text-responsive-3xl {
+    @apply text-2xl sm:text-3xl;
+  }
+  
+  .text-responsive-4xl {
+    @apply text-3xl sm:text-4xl;
+  }
 }
