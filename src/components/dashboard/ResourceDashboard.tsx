@@ -157,8 +157,6 @@ const ResourceDashboard: React.FC = () => {
         </Button>
       </div>
 
-      {/* Desktop Table View */}
-
       <div className="rounded-xl border border-gray-200 hidden md:block overflow-hidden">
         <div className="h-[500px] relative">
           <Table className="w-full table-fixed text-sm text-left">
@@ -177,7 +175,6 @@ const ResourceDashboard: React.FC = () => {
             </TableHeader>
           </Table>
 
-          {/* Scrollable body table */}
           <ScrollArea className="h-[428px] w-full">
             <Table className="w-full table-fixed text-sm text-left">
               <TableBody>
@@ -206,7 +203,6 @@ const ResourceDashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile Accordion View */}
       <div className="block md:hidden space-y-4 mt-4">
         {mockData.map((entry, index) => (
           <div key={index} className="border rounded-xl shadow-sm transition">
@@ -218,25 +214,44 @@ const ResourceDashboard: React.FC = () => {
               <span>{openIndex === index ? "−" : "+"}</span>
             </button>
             {openIndex === index && (
-              <div className="px-4 py-3 text-sm bg-white space-y-1">
-                <p>
-                  <strong>Employee:</strong> {entry.employeeName}
-                </p>
-                <p>
-                  <strong>Role:</strong> {entry.role}
-                </p>
-                <p>
-                  <strong>Start Date:</strong> {entry.startDate}
-                </p>
-                <p>
-                  <strong>End Date:</strong> {entry.endDate}
-                </p>
-                <p>
-                  <strong>Rate:</strong> ${entry.rate.toFixed(2)}
-                </p>
-                <p>
-                  <strong>Cost:</strong> ${entry.cost.toFixed(2)}
-                </p>
+              <div className="px-2 py-3 text-sm">
+                <div className="rounded-xl bg-gradient-to-br from-purple-100/80 to-white/90 border border-purple-200/60 shadow-lg p-4 animate-fade-in space-y-3 card-hover">
+                  <div className="flex items-center gap-3">
+                    <span className="inline-block rounded-full bg-primary/10 p-2 mr-2">
+                      <UsersRound className="w-4 h-4 text-primary" />
+                    </span>
+                    <div>
+                      <p className="font-semibold text-gray-900 text-base">{entry.employeeName}</p>
+                      <p className="text-xs text-muted-foreground font-medium">{entry.role}</p>
+                    </div>
+                  </div>
+                  <div className="flex flex-col sm:flex-row gap-2 text-xs text-muted-foreground">
+                    <span className="font-medium">
+                      Start: <span className="ml-1 text-gray-700">{entry.startDate}</span>
+                    </span>
+                    <span className="font-medium">
+                      End: <span className="ml-1 text-gray-700">{entry.endDate}</span>
+                    </span>
+                  </div>
+                  <div className="flex justify-between gap-2 mt-2">
+                    <div className="flex-1 flex items-center">
+                      <span className="inline-block px-2 py-1 bg-blue-100 text-blue-700 font-bold text-xs rounded-lg mr-2">
+                        Rate
+                      </span>
+                      <span className="font-mono text-base text-blue-800">
+                        ${entry.rate.toFixed(2)}
+                      </span>
+                    </div>
+                    <div className="flex-1 flex items-center justify-end">
+                      <span className="inline-block px-2 py-1 bg-green-100 text-green-700 font-bold text-xs rounded-lg mr-2">
+                        Cost
+                      </span>
+                      <span className="font-mono text-base text-green-800">
+                        ${entry.cost.toFixed(2)}
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
           </div>
