@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Download, UsersRound } from "lucide-react";
+import { Download, UsersRound, user } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { generateResourceReport } from "../../utils/generateReport";
 import {
@@ -133,8 +133,22 @@ const mockData: ResourceAllocation[] = [
   },
 ];
 
+// Helper for grouping by project
+const groupByProject = (data: ResourceAllocation[]) => {
+  const map: Record<string, ResourceAllocation[]> = {};
+  data.forEach(item => {
+    if (!map[item.project]) map[item.project] = [];
+    map[item.project].push(item);
+  });
+  return map;
+};
+
+const groupedProjects = groupByProject(mockData);
+
 const ResourceDashboard: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const projectList = Object.entries(groupedProjects);
 
   const toggleAccordion = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -147,7 +161,6 @@ const ResourceDashboard: React.FC = () => {
           <UsersRound className="mr-2 h-5 w-5 text-primary shrink-0" />
           Project-Wise Resource Allocation
         </h2>
-
         <Button
           className="ml-4 shadow-neon transition-all hover:translate-y-[-2px] px-3 sm:px-4 py-2 whitespace-nowrap"
           onClick={generateResourceReport}
@@ -157,15 +170,14 @@ const ResourceDashboard: React.FC = () => {
         </Button>
       </div>
 
+      {/* Desktop Table */}
       <div className="rounded-xl border border-gray-200 hidden md:block overflow-hidden">
         <div className="h-[500px] relative">
           <Table className="w-full table-fixed text-sm text-left">
             <TableHeader className="sticky top-[72px] bg-card z-10 shadow-sm">
               <TableRow>
                 <TableHead className="bg-card px-4 py-3">Project</TableHead>
-                <TableHead className="bg-card px-4 py-3">
-                  Employee Name
-                </TableHead>
+                <TableHead className="bg-card px-4 py-3">Employee Name</TableHead>
                 <TableHead className="bg-card px-4 py-3">Role</TableHead>
                 <TableHead className="bg-card px-4 py-3">Start Date</TableHead>
                 <TableHead className="bg-card px-4 py-3">End Date</TableHead>
@@ -174,27 +186,18 @@ const ResourceDashboard: React.FC = () => {
               </TableRow>
             </TableHeader>
           </Table>
-
           <ScrollArea className="h-[428px] w-full">
             <Table className="w-full table-fixed text-sm text-left">
               <TableBody>
                 {mockData.map((entry, index) => (
                   <TableRow key={index}>
                     <TableCell className="px-4 py-3">{entry.project}</TableCell>
-                    <TableCell className="px-4 py-3">
-                      {entry.employeeName}
-                    </TableCell>
+                    <TableCell className="px-4 py-3">{entry.employeeName}</TableCell>
                     <TableCell className="px-4 py-3">{entry.role}</TableCell>
-                    <TableCell className="px-4 py-3">
-                      {entry.startDate}
-                    </TableCell>
+                    <TableCell className="px-4 py-3">{entry.startDate}</TableCell>
                     <TableCell className="px-4 py-3">{entry.endDate}</TableCell>
-                    <TableCell className="px-4 py-3">
-                      {entry.rate.toFixed(2)}
-                    </TableCell>
-                    <TableCell className="px-4 py-3">
-                      {entry.cost.toFixed(2)}
-                    </TableCell>
+                    <TableCell className="px-4 py-3">{entry.rate.toFixed(2)}</TableCell>
+                    <TableCell className="px-4 py-3">{entry.cost.toFixed(2)}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -203,55 +206,61 @@ const ResourceDashboard: React.FC = () => {
         </div>
       </div>
 
+      {/* Mobile Accordion Grouped by Project */}
       <div className="block md:hidden space-y-4 mt-4">
-        {mockData.map((entry, index) => (
-          <div key={index} className="border rounded-xl shadow-sm transition">
+        {projectList.map(([project, employees], idx) => (
+          <div key={project} className="border rounded-xl shadow-sm transition">
             <button
               className="w-full flex justify-between items-center px-4 py-3 text-left font-semibold text-gray-800 bg-[#f6f7ff] rounded-t-xl"
-              onClick={() => toggleAccordion(index)}
+              onClick={() => toggleAccordion(idx)}
             >
-              <span>{entry.project}</span>
-              <span>{openIndex === index ? "−" : "+"}</span>
+              <span className="truncate">{project}</span>
+              <span>{openIndex === idx ? "−" : "+"}</span>
             </button>
-            {openIndex === index && (
-              <div className="px-2 py-3 text-sm">
-                <div className="rounded-xl bg-gradient-to-br from-purple-100/80 to-white/90 border border-purple-200/60 shadow-lg p-4 animate-fade-in space-y-3 card-hover">
-                  <div className="flex items-center gap-3">
-                    <span className="inline-block rounded-full bg-primary/10 p-2 mr-2">
-                      <UsersRound className="w-4 h-4 text-primary" />
-                    </span>
-                    <div>
-                      <p className="font-semibold text-gray-900 text-base">{entry.employeeName}</p>
-                      <p className="text-xs text-muted-foreground font-medium">{entry.role}</p>
-                    </div>
-                  </div>
-                  <div className="flex flex-col sm:flex-row gap-2 text-xs text-muted-foreground">
-                    <span className="font-medium">
-                      Start: <span className="ml-1 text-gray-700">{entry.startDate}</span>
-                    </span>
-                    <span className="font-medium">
-                      End: <span className="ml-1 text-gray-700">{entry.endDate}</span>
-                    </span>
-                  </div>
-                  <div className="flex justify-between gap-2 mt-2">
-                    <div className="flex-1 flex items-center">
-                      <span className="inline-block px-2 py-1 bg-blue-100 text-blue-700 font-bold text-xs rounded-lg mr-2">
-                        Rate
+            {openIndex === idx && (
+              <div className="p-2 animate-fade-in space-y-3 bg-white rounded-b-xl">
+                {employees.map((entry, eIdx) => (
+                  <div
+                    key={eIdx}
+                    className="rounded-lg bg-gradient-to-br from-purple-100/80 to-white/90 border border-purple-200/60 shadow-md p-3 flex flex-col gap-2"
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="inline-block rounded-full bg-primary/10 p-2">
+                        <UsersRound className="w-5 h-5 text-primary" />
                       </span>
-                      <span className="font-mono text-base text-blue-800">
-                        ${entry.rate.toFixed(2)}
+                      <div>
+                        <p className="font-semibold text-gray-900 text-base">{entry.employeeName}</p>
+                        <p className="text-xs text-muted-foreground font-medium">{entry.role}</p>
+                      </div>
+                    </div>
+                    <div className="flex flex-col sm:flex-row gap-1 text-xs text-muted-foreground">
+                      <span className="font-medium">
+                        Start: <span className="ml-1 text-gray-700">{entry.startDate}</span>
+                      </span>
+                      <span className="font-medium">
+                        End: <span className="ml-1 text-gray-700">{entry.endDate}</span>
                       </span>
                     </div>
-                    <div className="flex-1 flex items-center justify-end">
-                      <span className="inline-block px-2 py-1 bg-green-100 text-green-700 font-bold text-xs rounded-lg mr-2">
-                        Cost
-                      </span>
-                      <span className="font-mono text-base text-green-800">
-                        ${entry.cost.toFixed(2)}
-                      </span>
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      <div className="flex-1 flex items-center min-w-[120px]">
+                        <span className="inline-block px-2 py-1 bg-blue-100 text-blue-700 font-bold text-xs rounded-lg mr-2">
+                          Rate
+                        </span>
+                        <span className="font-mono text-base text-blue-800">
+                          ${entry.rate.toFixed(2)}
+                        </span>
+                      </div>
+                      <div className="flex-1 flex items-center min-w-[120px]">
+                        <span className="inline-block px-2 py-1 bg-green-100 text-green-700 font-bold text-xs rounded-lg mr-2">
+                          Cost
+                        </span>
+                        <span className="font-mono text-base text-green-800">
+                          ${entry.cost.toFixed(2)}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
+                ))}
               </div>
             )}
           </div>
