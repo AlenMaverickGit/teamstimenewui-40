@@ -198,40 +198,114 @@ const Dashboard: React.FC = () => {
   return (
     <div className="space-y-6">
       <Tabs value={activeView} onValueChange={setActiveView} className="w-full">
-        <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 gap-2 mb-6">
+        <TabsList
+          className="
+            grid w-full
+            grid-cols-1
+            gap-2
+            sm:grid-cols-2
+            md:grid-cols-4
+            mb-6
+            p-1
+            bg-card/70
+            rounded-lg
+            shadow-sm
+            [&>*]:transition-all
+          "
+        >
           <TabsTrigger
             value="overview"
-            className="flex flex-col md:flex-row items-center justify-center gap-1 text-xs md:text-sm text-center px-2 py-2"
+            className="
+              flex flex-row items-center justify-center gap-2
+              w-full
+              py-3
+              text-base
+              font-medium
+              rounded-md
+              shadow-sm
+              bg-background/80
+              hover:bg-accent/40
+              active:bg-accent/60
+              aria-[selected=true]:bg-primary aria-[selected=true]:text-primary-foreground
+              aria-[selected=true]:shadow
+              transition-all
+              duration-200
+            "
           >
-            <BarChart className="h-4 w-4" />
-            Overview
+            <BarChart className="h-5 w-5 sm:h-4 sm:w-4" />
+            <span className="block">Overview</span>
           </TabsTrigger>
 
           <TabsTrigger
             value="projects"
-            className="flex flex-col md:flex-row items-center justify-center gap-1 text-xs md:text-sm text-center px-2 py-2"
+            className="
+              flex flex-row items-center justify-center gap-2
+              w-full
+              py-3
+              text-base
+              font-medium
+              rounded-md
+              shadow-sm
+              bg-background/80
+              hover:bg-accent/40
+              active:bg-accent/60
+              aria-[selected=true]:bg-primary aria-[selected=true]:text-primary-foreground
+              aria-[selected=true]:shadow
+              transition-all
+              duration-200
+            "
           >
-            <PieChart className="h-4 w-4" />
-            Projects
+            <PieChart className="h-5 w-5 sm:h-4 sm:w-4" />
+            <span className="block">Projects</span>
           </TabsTrigger>
 
           <TabsTrigger
             value="team"
-            className="flex flex-col md:flex-row items-center justify-center gap-1 text-xs md:text-sm text-center px-2 py-2"
+            className="
+              flex flex-row items-center justify-center gap-2
+              w-full
+              py-3
+              text-base
+              font-medium
+              rounded-md
+              shadow-sm
+              bg-background/80
+              hover:bg-accent/40
+              active:bg-accent/60
+              aria-[selected=true]:bg-primary aria-[selected=true]:text-primary-foreground
+              aria-[selected=true]:shadow
+              transition-all
+              duration-200
+            "
           >
-            <Users className="h-4 w-4" />
-            Team Performance
+            <Users className="h-5 w-5 sm:h-4 sm:w-4" />
+            <span className="block">Team Performance</span>
           </TabsTrigger>
 
           <TabsTrigger
             value="resource"
-            className="flex flex-col md:flex-row items-center justify-center gap-1 text-xs md:text-sm text-center px-2 py-2"
+            className="
+              flex flex-row items-center justify-center gap-2
+              w-full
+              py-3
+              text-base
+              font-medium
+              rounded-md
+              shadow-sm
+              bg-background/80
+              hover:bg-accent/40
+              active:bg-accent/60
+              aria-[selected=true]:bg-primary aria-[selected=true]:text-primary-foreground
+              aria-[selected=true]:shadow
+              transition-all
+              duration-200
+            "
           >
-            <Boxes className="h-4 w-4" />
-            Resource Allocation
+            <Boxes className="h-5 w-5 sm:h-4 sm:w-4" />
+            <span className="block">Resource Allocation</span>
           </TabsTrigger>
         </TabsList>
-        <br></br> <br></br> <br></br>
+        <br /> <br /> <br />
         <TabsContent value="overview" className="space-y-6 animate-fade-in">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {/* Summary Cards */}
