@@ -150,9 +150,10 @@ const TeamPerformanceDashboard: React.FC = () => {
         </TabsList>
 
         <TabsContent value="charts" className="space-y-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Responsive grid for chart cards */}
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {/* Efficiency Chart */}
-            <Card className="shadow-sm">
+            <Card className="shadow-sm min-h-[320px] !p-0 rounded-lg">
               <CardHeader>
                 <CardTitle className="flex items-center">
                   <BadgeCheck className="mr-2 h-5 w-5 text-primary" />
@@ -162,8 +163,8 @@ const TeamPerformanceDashboard: React.FC = () => {
                   Comparing planned vs actual time spent
                 </CardDescription>
               </CardHeader>
-              <CardContent className="pt-2">
-                <div className="h-[300px]">
+              <CardContent className="pt-2 pb-4 px-2 xs:px-2 sm:px-4">
+                <div className="h-[250px] xs:h-[290px] sm:h-[290px] md:h-[300px]">
                   <ChartContainer
                     config={{
                       efficiency: {
@@ -256,9 +257,8 @@ const TeamPerformanceDashboard: React.FC = () => {
                 </div>
               </CardContent>
             </Card>
-
             {/* Project Completion Chart */}
-            <Card className="shadow-sm">
+            <Card className="shadow-sm min-h-[320px] !p-0 rounded-lg">
               <CardHeader>
                 <CardTitle className="flex items-center">
                   <PieChartIcon className="mr-2 h-5 w-5 text-primary" />
@@ -268,8 +268,8 @@ const TeamPerformanceDashboard: React.FC = () => {
                   Task completion rate by project
                 </CardDescription>
               </CardHeader>
-              <CardContent className="pt-2">
-                <div className="h-[300px]">
+              <CardContent className="pt-2 pb-4 px-2 xs:px-2 sm:px-4">
+                <div className="h-[250px] xs:h-[290px] sm:h-[290px] md:h-[300px]">
                   <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
                       <Pie
@@ -328,9 +328,8 @@ const TeamPerformanceDashboard: React.FC = () => {
                 </div>
               </CardContent>
             </Card>
-
-            {/* Time Comparison Chart */}
-            <Card className="shadow-sm lg:col-span-2">
+            {/* Time Comparison Chart (spans two columns on desktop) */}
+            <Card className="shadow-sm min-h-[320px] !p-0 rounded-lg md:col-span-2">
               <CardHeader>
                 <CardTitle className="flex items-center">
                   <AlertTriangle className="mr-2 h-5 w-5 text-primary" />
@@ -340,8 +339,8 @@ const TeamPerformanceDashboard: React.FC = () => {
                   Planned hours vs actual hours spent
                 </CardDescription>
               </CardHeader>
-              <CardContent className="pt-2">
-                <div className="h-[300px]">
+              <CardContent className="pt-2 pb-4 px-2 xs:px-2 sm:px-4">
+                <div className="h-[250px] xs:h-[290px] sm:h-[290px] md:h-[300px]">
                   <ChartContainer
                     config={{
                       planned: { theme: { light: "#3b82f6", dark: "#60a5fa" } },
