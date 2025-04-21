@@ -201,10 +201,10 @@ const Dashboard: React.FC = () => {
         <TabsList
           className="
             grid w-full
-            grid-cols-1
-            gap-2
+            grid-cols-2      // <<< Change: two columns on smallest screens
             sm:grid-cols-2
             md:grid-cols-4
+            gap-2
             mb-6
             p-1
             bg-card/70
