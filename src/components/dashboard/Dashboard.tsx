@@ -198,25 +198,40 @@ const Dashboard: React.FC = () => {
   return (
     <div className="space-y-6">
       <Tabs value={activeView} onValueChange={setActiveView} className="w-full">
-        <TabsList className="grid w-full grid-cols-4 mb-6">
-          <TabsTrigger value="overview" className="text-sm">
-            <BarChart className="h-4 w-4 mr-2" />
+        <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 gap-2 mb-6">
+          <TabsTrigger
+            value="overview"
+            className="flex flex-col md:flex-row items-center justify-center gap-1 text-xs md:text-sm text-center px-2 py-2"
+          >
+            <BarChart className="h-4 w-4" />
             Overview
           </TabsTrigger>
-          <TabsTrigger value="projects" className="text-sm">
-            <PieChart className="h-4 w-4 mr-2" />
+
+          <TabsTrigger
+            value="projects"
+            className="flex flex-col md:flex-row items-center justify-center gap-1 text-xs md:text-sm text-center px-2 py-2"
+          >
+            <PieChart className="h-4 w-4" />
             Projects
           </TabsTrigger>
-          <TabsTrigger value="team" className="text-sm">
-            <Users className="h-4 w-4 mr-2" />
+
+          <TabsTrigger
+            value="team"
+            className="flex flex-col md:flex-row items-center justify-center gap-1 text-xs md:text-sm text-center px-2 py-2"
+          >
+            <Users className="h-4 w-4" />
             Team Performance
           </TabsTrigger>
-          <TabsTrigger value="resource" className="text-sm">
-            <Boxes className="h-4 w-4 mr-2" />
+
+          <TabsTrigger
+            value="resource"
+            className="flex flex-col md:flex-row items-center justify-center gap-1 text-xs md:text-sm text-center px-2 py-2"
+          >
+            <Boxes className="h-4 w-4" />
             Resource Allocation
           </TabsTrigger>
         </TabsList>
-
+        <br></br> <br></br> <br></br>
         <TabsContent value="overview" className="space-y-6 animate-fade-in">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {/* Summary Cards */}
@@ -305,15 +320,19 @@ const Dashboard: React.FC = () => {
                   >
                     <div className="flex items-start">
                       {task.status === "delayed" ? (
-                        <AlertTriangle className="h-4 w-4 text-status-delayed mr-2" />
+                        <AlertTriangle className="h-4 w-4 text-status-delayed mr-2 mt-1" />
                       ) : (
-                        <CheckCircle2 className="h-4 w-4 text-status-complete mr-2" />
+                        <CheckCircle2 className="h-4 w-4 text-status-complete mr-2 mt-1" />
                       )}
-                      <div className="flex-1">
-                        <div className="flex justify-between">
-                          <AlertTitle>{task.title}</AlertTitle>
+
+                      <div className="flex-1 space-y-1">
+                        {/* Title and Status Label */}
+                        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
+                          <AlertTitle className="text-base">
+                            {task.title}
+                          </AlertTitle>
                           <span
-                            className={`text-xs rounded-full px-2 py-1 ${
+                            className={`text-xs rounded-full px-2 py-1 mt-1 sm:mt-0 w-max ${
                               task.status === "delayed"
                                 ? "bg-status-delayed/10 text-status-delayed"
                                 : "bg-status-complete/10 text-status-complete"
@@ -324,26 +343,32 @@ const Dashboard: React.FC = () => {
                               : "Early Completion"}
                           </span>
                         </div>
-                        <AlertDescription className="text-sm">
-                          <div className="flex items-center text-muted-foreground mb-1 text-xs">
-                            <Calendar className="h-3 w-3 mr-1" />{" "}
+
+                        {/* Project & Assignee */}
+                        <div className="flex flex-col sm:flex-row sm:items-center text-muted-foreground text-xs mt-1">
+                          <div className="flex items-center mb-1 sm:mb-0">
+                            <Calendar className="h-3 w-3 mr-1" />
                             {task.projectName}
-                            <span className="mx-2">•</span>
-                            <User className="h-3 w-3 mr-1" />{" "}
+                          </div>
+                          <span className="hidden sm:inline mx-2">•</span>
+                          <div className="flex items-center">
+                            <User className="h-3 w-3 mr-1" />
                             {task.assigneeName}
                           </div>
-                          <div className="flex justify-between items-center">
-                            <span>
-                              {task.status === "delayed"
-                                ? "Taking longer than estimated"
-                                : "Completed ahead of schedule"}
-                            </span>
-                            <span className="text-sm font-medium">
-                              {formatTimeHoursMinutes(task.timeSpent)} /{" "}
-                              {formatTimeHoursMinutes(task.estimatedTime)}
-                            </span>
-                          </div>
-                        </AlertDescription>
+                        </div>
+
+                        {/* Status & Time */}
+                        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center text-sm">
+                          <span className="text-muted-foreground">
+                            {task.status === "delayed"
+                              ? "Taking longer than estimated"
+                              : "Completed ahead of schedule"}
+                          </span>
+                          <span className="font-medium">
+                            {formatTimeHoursMinutes(task.timeSpent)} /{" "}
+                            {formatTimeHoursMinutes(task.estimatedTime)}
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </Alert>
@@ -358,7 +383,6 @@ const Dashboard: React.FC = () => {
             </CardContent>
           </Card>
         </TabsContent>
-
         <TabsContent value="projects" className="space-y-6 animate-fade-in">
           <Card className="overflow-hidden">
             <CardHeader className="bg-muted/20">
@@ -422,11 +446,9 @@ const Dashboard: React.FC = () => {
             </CardContent>
           </Card>
         </TabsContent>
-
         <TabsContent value="team" className="animate-fade-in">
           <TeamPerformanceDashboard />
         </TabsContent>
-
         <TabsContent value="resource" className="animate-fade-in">
           <ResourceDashboard />
         </TabsContent>

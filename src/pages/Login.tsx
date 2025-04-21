@@ -26,20 +26,22 @@ const Login: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#5D2EFF] via-[#6B2BEB] to-[#814BFE] flex flex-col items-center justify-center px-4 py-8">
-      <h1 className="text-responsive-4xl text-white font-bold mb-8 drop-shadow-lg">
+      {/* Welcome Message */}
+      <h1 className="text-white text-4xl md:text-5xl font-bold mb-8 drop-shadow-lg">
         Welcome to <span className="text-yellow-300">TeamsTime</span>
       </h1>
 
+      {/* Login Card */}
       <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md p-10 transition-transform transform hover:scale-[1.01]">
         <div className="text-center mb-6">
-          <p className="text-responsive-lg text-gray-600 font-medium">
+          <p className="text-lg text-gray-600 font-medium">
             Please login to continue
           </p>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-5">
           <div>
-            <label className="block text-responsive-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               Employee ID
             </label>
             <input
@@ -53,7 +55,7 @@ const Login: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-responsive-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               Password
             </label>
             <input
@@ -66,7 +68,7 @@ const Login: React.FC = () => {
             />
           </div>
 
-          {error && <p className="text-responsive-sm text-red-500 text-center">{error}</p>}
+          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
           <button
             type="submit"
@@ -76,7 +78,7 @@ const Login: React.FC = () => {
           </button>
         </form>
 
-        <p className="text-responsive-xs text-center text-gray-400 mt-6">
+        <p className="text-xs text-center text-gray-400 mt-6">
           Powered by{" "}
           <span className="text-indigo-600 font-semibold">TeamsTime</span>
         </p>

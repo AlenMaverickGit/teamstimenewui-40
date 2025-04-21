@@ -105,12 +105,12 @@ const TeamOverview: React.FC = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {/* {usersWithStats.map((user) => (
+            {usersWithStats.map((user) => (
               <TeamMemberRow key={user.id} user={user} />
-            ))} */}
-            {employees.map((employee) => (
-              <EmployeeAppend key={employee.employeeId} employee={employee} />
             ))}
+            {/* {employees.map((employee) => (
+              <EmployeeAppend key={employee.employeeId} employee={employee} />
+            ))} */}
           </TableBody>
         </Table>
       </CardContent>

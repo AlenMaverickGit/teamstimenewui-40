@@ -92,14 +92,6 @@
 
   body {
     @apply bg-background text-foreground;
-    font-size: 16px;
-  }
-  
-  /* Responsive base font size */
-  @media (max-width: 640px) {
-    body {
-      font-size: 14px;
-    }
   }
 }
 
@@ -123,82 +115,4 @@
 
 .text-gradient {
   @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
-}
-
-/* Enhanced responsive typography with direct media queries */
-@layer utilities {
-  /* Responsive Typography Utilities */
-  .text-responsive-xs {
-    @apply text-xs;
-  }
-  
-  .text-responsive-sm {
-    @apply text-sm;
-  }
-  
-  .text-responsive-base {
-    @apply text-base;
-  }
-  
-  .text-responsive-lg {
-    @apply text-lg;
-  }
-  
-  .text-responsive-xl {
-    @apply text-xl;
-  }
-  
-  .text-responsive-2xl {
-    @apply text-2xl;
-  }
-  
-  .text-responsive-3xl {
-    @apply text-3xl;
-  }
-  
-  .text-responsive-4xl {
-    @apply text-4xl;
-  }
-  
-  @media (max-width: 767px) {
-    .text-responsive-xs {
-      font-size: 0.625rem; /* 10px */
-      line-height: 0.875rem;
-    }
-    
-    .text-responsive-sm {
-      font-size: 0.75rem; /* 12px */
-      line-height: 1rem;
-    }
-    
-    .text-responsive-base {
-      font-size: 0.875rem; /* 14px */
-      line-height: 1.25rem;
-    }
-    
-    .text-responsive-lg {
-      font-size: 1rem; /* 16px */
-      line-height: 1.5rem;
-    }
-    
-    .text-responsive-xl {
-      font-size: 1.125rem; /* 18px */
-      line-height: 1.5rem;
-    }
-    
-    .text-responsive-2xl {
-      font-size: 1.25rem; /* 20px */
-      line-height: 1.75rem;
-    }
-    
-    .text-responsive-3xl {
-      font-size: 1.5rem; /* 24px */
-      line-height: 2rem;
-    }
-    
-    .text-responsive-4xl {
-      font-size: 1.75rem; /* 28px */
-      line-height: 2.25rem;
-    }
-  }
 }
