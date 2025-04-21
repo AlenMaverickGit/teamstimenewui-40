@@ -1,3 +1,4 @@
+
 import React from "react";
 import { getTeamStatistics, getProjectStatistics } from "@/utils/dummyData";
 import {
@@ -153,7 +154,7 @@ const TeamPerformanceDashboard: React.FC = () => {
           {/* Responsive grid for chart cards */}
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {/* Efficiency Chart */}
-            <Card className="shadow-sm min-h-[320px] !p-0 rounded-lg">
+            <Card className="shadow-sm min-h-[360px] !p-0 rounded-lg">
               <CardHeader>
                 <CardTitle className="flex items-center">
                   <BadgeCheck className="mr-2 h-5 w-5 text-primary" />
@@ -164,7 +165,8 @@ const TeamPerformanceDashboard: React.FC = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent className="pt-2 pb-4 px-2 xs:px-2 sm:px-4">
-                <div className="h-[250px] xs:h-[290px] sm:h-[290px] md:h-[300px]">
+                {/* Increased height on smaller screens */}
+                <div className="h-[320px] xs:h-[360px] sm:h-[360px] md:h-[300px]">
                   <ChartContainer
                     config={{
                       efficiency: {
@@ -329,7 +331,7 @@ const TeamPerformanceDashboard: React.FC = () => {
               </CardContent>
             </Card>
             {/* Time Comparison Chart (spans two columns on desktop) */}
-            <Card className="shadow-sm min-h-[320px] !p-0 rounded-lg md:col-span-2">
+            <Card className="shadow-sm min-h-[360px] !p-0 rounded-lg md:col-span-2">
               <CardHeader>
                 <CardTitle className="flex items-center">
                   <AlertTriangle className="mr-2 h-5 w-5 text-primary" />
@@ -340,7 +342,8 @@ const TeamPerformanceDashboard: React.FC = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent className="pt-2 pb-4 px-2 xs:px-2 sm:px-4">
-                <div className="h-[250px] xs:h-[290px] sm:h-[290px] md:h-[300px]">
+                {/* Increased height on smaller screens */}
+                <div className="h-[320px] xs:h-[360px] sm:h-[360px] md:h-[300px]">
                   <ChartContainer
                     config={{
                       planned: { theme: { light: "#3b82f6", dark: "#60a5fa" } },
@@ -536,3 +539,4 @@ const TeamPerformanceDashboard: React.FC = () => {
 };
 
 export default TeamPerformanceDashboard;
+
