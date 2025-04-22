@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
@@ -114,14 +115,15 @@ const ProjectList: React.FC = () => {
       </div>
 
       <CardContent className="p-0">
-        <div className="overflow-x-auto">
+        {/* Desktop View */}
+        <div className="hidden md:block overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow>
                 <TableHead>Project Name</TableHead>
-                <TableHead className="hidden md:table-cell">Client</TableHead>
-                <TableHead className="hidden md:table-cell">Timeline</TableHead>
-                <TableHead className="hidden md:table-cell">Team</TableHead>
+                <TableHead>Client</TableHead>
+                <TableHead>Timeline</TableHead>
+                <TableHead>Team</TableHead>
                 <TableHead>Progress</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
@@ -153,6 +155,90 @@ const ProjectList: React.FC = () => {
               )}
             </TableBody>
           </Table>
+        </div>
+
+        {/* Mobile View */}
+        <div className="block md:hidden">
+          {filteredProjects.length > 0 ? (
+            <div className="divide-y divide-border">
+              {filteredProjects.map((project) => (
+                <div key={project.id} className="p-4 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <Link
+                      to={`/projects/${project.id}`}
+                      className="text-base font-semibold hover:text-primary transition-colors"
+                    >
+                      {project.name}
+                    </Link>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      asChild
+                      className="ml-2"
+                    >
+                      <Link to={`/projects/${project.id}`}>
+                        <span className="sr-only">View details for {project.name}</span>
+                        <ArrowRight className="h-4 w-4" />
+                      </Link>
+                    </Button>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-2 text-sm">
+                    <div className="space-y-1">
+                      <p className="text-muted-foreground">Client</p>
+                      <p className="font-medium">{project.clientName}</p>
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-muted-foreground">Team</p>
+                      <div className="flex items-center">
+                        <Users className="h-4 w-4 mr-1 text-muted-foreground" />
+                        <span>{project.teamMembers.length} members</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <div className="flex items-center text-sm">
+                      <Calendar className="h-4 w-4 mr-2 text-muted-foreground" />
+                      <span>
+                        {format(new Date(project.startDate), "MMM d, yyyy")} - {format(new Date(project.endDate), "MMM d, yyyy")}
+                      </span>
+                    </div>
+                    
+                    <div className="flex items-center gap-2">
+                      <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div
+                          className={`h-2 rounded-full ${getProgressColor(
+                            project.progress
+                          )}`}
+                          style={{ width: `${project.progress}%` }}
+                        ></div>
+                      </div>
+                      <Badge
+                        variant="outline"
+                        className={`${getProgressColor(project.progress)}`}
+                      >
+                        {project.progress}%
+                      </Badge>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="p-8 text-center">
+              <p className="text-sm text-muted-foreground">No projects found</p>
+              {searchQuery && (
+                <Button
+                  variant="ghost"
+                  onClick={() => setSearchQuery("")}
+                  className="mt-2 text-sm"
+                >
+                  Clear search
+                </Button>
+              )}
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>
