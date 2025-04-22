@@ -191,21 +191,20 @@ const ProjectList: React.FC = () => {
                     </Button>
                   </div>
                   
+                  {/* First row - Client and Tasks */}
                   <div className="grid grid-cols-2 gap-2 text-sm">
                     <div className="space-y-1">
                       <p className="text-muted-foreground">Client</p>
                       <p className="font-medium">{project.clientName}</p>
                     </div>
-                    <div className="space-y-1">
-                      <p className="text-muted-foreground">Team</p>
-                      <div className="flex items-center">
-                        <Users className="h-4 w-4 mr-1 text-muted-foreground" />
-                        <span>{project.teamMembers.length} members</span>
-                      </div>
+                    <div className="space-y-1 text-right">
+                      <p className="text-muted-foreground">Tasks</p>
+                      <p className="font-medium">{project.completedTasks}/{project.totalTasks} Tasks</p>
                     </div>
                   </div>
 
                   <div className="space-y-2">
+                    {/* Timeline */}
                     <div className="flex items-center text-sm">
                       <Calendar className="h-4 w-4 mr-2 text-muted-foreground" />
                       <span>
@@ -213,6 +212,7 @@ const ProjectList: React.FC = () => {
                       </span>
                     </div>
                     
+                    {/* Progress bar */}
                     <div className="flex items-center gap-2">
                       <div className="w-full bg-gray-200 rounded-full h-2">
                         <div
@@ -228,6 +228,12 @@ const ProjectList: React.FC = () => {
                       >
                         {project.progress}%
                       </Badge>
+                    </div>
+                    
+                    {/* Team Members - Moved to bottom */}
+                    <div className="flex items-center justify-end mt-2 text-sm">
+                      <Users className="h-4 w-4 mr-1 text-muted-foreground" />
+                      <span>{project.teamMembers.length} members</span>
                     </div>
                   </div>
                 </div>
