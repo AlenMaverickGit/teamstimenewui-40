@@ -36,6 +36,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+// Move getProgressColor function outside of component to make it accessible everywhere
+const getProgressColor = (progress: number) => {
+  if (progress === 100) return "bg-status-complete text-white";
+  if (progress > 70) return "bg-status-inprogress text-white";
+  if (progress > 30) return "bg-yellow-500 text-white";
+  return "bg-gray-200 text-gray-700";
+};
+
 const ProjectList: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -257,13 +265,6 @@ interface ProjectRowProps {
 const ProjectRow: React.FC<ProjectRowProps> = ({ project }) => {
   const startDateFormatted = format(new Date(project.startDate), "MMM d, yyyy");
   const endDateFormatted = format(new Date(project.endDate), "MMM d, yyyy");
-
-  const getProgressColor = (progress: number) => {
-    if (progress === 100) return "bg-status-complete text-white";
-    if (progress > 70) return "bg-status-inprogress text-white";
-    if (progress > 30) return "bg-yellow-500 text-white";
-    return "bg-gray-200 text-gray-700";
-  };
 
   return (
     <TableRow className="group">
