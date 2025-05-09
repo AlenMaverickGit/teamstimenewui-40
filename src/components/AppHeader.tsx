@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { 
+  Clock, 
   BarChart3, 
   Users, 
   Menu, 
@@ -11,8 +12,7 @@ import {
   Settings,
   HelpCircle,
   LogOut,
-  ClipboardList,
-  Clock
+  ClipboardList
 } from 'lucide-react';
 import {
   DropdownMenu,
