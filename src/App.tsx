@@ -17,7 +17,7 @@ import Register from "./pages/Register";
 import VerifyOTP from "./pages/VerifyOTP";
 import CreatePassword from "./pages/CreatePassword";
 import UserProfile from "./pages/UserProfile";
-import { Sidebar } from "./components/layout/Sidebar";
+import AppHeader from "./components/AppHeader";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +30,17 @@ const AuthenticatedRoute = ({ children }: { children: React.ReactNode }) => {
   }
   
   return <>{children}</>;
+};
+
+const AppLayout = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <div className="flex flex-col min-h-screen">
+      <AppHeader />
+      <main className="flex-1 p-6">
+        {children}
+      </main>
+    </div>
+  );
 };
 
 const App = () => {
@@ -46,52 +57,52 @@ const App = () => {
             <Route path="/verify-otp" element={<VerifyOTP />} />
             <Route path="/create-password" element={<CreatePassword />} />
             
-            {/* App Routes - With Sidebar Layout */}
+            {/* App Routes - With Header Layout */}
             <Route path="/dashboard" element={
               <AuthenticatedRoute>
-                <Sidebar>
+                <AppLayout>
                   <Dashboard />
-                </Sidebar>
+                </AppLayout>
               </AuthenticatedRoute>
             } />
             
             <Route path="/projects" element={
               <AuthenticatedRoute>
-                <Sidebar>
+                <AppLayout>
                   <Projects />
-                </Sidebar>
+                </AppLayout>
               </AuthenticatedRoute>
             } />
             
             <Route path="/projects/:projectId" element={
               <AuthenticatedRoute>
-                <Sidebar>
+                <AppLayout>
                   <ProjectDetails />
-                </Sidebar>
+                </AppLayout>
               </AuthenticatedRoute>
             } />
             
             <Route path="/team" element={
               <AuthenticatedRoute>
-                <Sidebar>
+                <AppLayout>
                   <TeamMembers />
-                </Sidebar>
+                </AppLayout>
               </AuthenticatedRoute>
             } />
             
             <Route path="/timesheet" element={
               <AuthenticatedRoute>
-                <Sidebar>
+                <AppLayout>
                   <Timesheet />
-                </Sidebar>
+                </AppLayout>
               </AuthenticatedRoute>
             } />
             
             <Route path="/profile" element={
               <AuthenticatedRoute>
-                <Sidebar>
+                <AppLayout>
                   <UserProfile />
-                </Sidebar>
+                </AppLayout>
               </AuthenticatedRoute>
             } />
             
