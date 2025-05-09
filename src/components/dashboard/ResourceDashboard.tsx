@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Download, UsersRound, user } from "lucide-react";
+import { Download, UsersRound, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { generateResourceReport } from "../../utils/generateReport";
 import {
