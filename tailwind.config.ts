@@ -66,7 +66,7 @@ export default {
 				status: {
 					delayed: '#FF5757',
 					complete: '#4CAF50',
-					inprogress: '#8B5CF6', // Updated to match the futuristic purple
+					inprogress: '#3B82F6',
 					notstarted: '#9CA3AF'
 				}
 			},
@@ -91,15 +91,22 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'fade-in': {
+					from: { opacity: '0', transform: 'translateY(10px)' },
+					to: { opacity: '1', transform: 'translateY(0)' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'fade-in': 'fade-in 0.3s ease-out'
 			},
 			boxShadow: {
-				'neon': '0 0 5px theme("colors.primary.DEFAULT"), 0 0 20px theme("colors.primary.DEFAULT")',
-				'card': '0 8px 30px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06)'
+				'card': '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08)',
+				'card-hover': '0 4px 8px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.06)',
+				'nav': '0 2px 4px rgba(0,0,0,0.08)',
+				'sidebar': '0 0 20px rgba(0,0,0,0.08)'
 			}
 		}
 	},
