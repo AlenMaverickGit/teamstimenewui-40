@@ -1,23 +1,31 @@
 
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { fetchClientToken } from "../../src/services/tokenservice";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Check } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
 
 const Login: React.FC = () => {
   const [employeeId, setEmployeeId] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  
   const navigate = useNavigate();
   const location = useLocation();
+  const { toast } = useToast();
 
   useEffect(() => {
     // Check if user was redirected from successful registration
     if (location.state?.registrationSuccess) {
       setShowSuccessMessage(true);
+      
+      toast({
+        title: "Account created successfully!",
+        description: "You can now login with your credentials.",
+        duration: 5000
+      });
       
       // Hide success message after 5 seconds
       const timer = setTimeout(() => {
@@ -26,20 +34,23 @@ const Login: React.FC = () => {
       
       return () => clearTimeout(timer);
     }
-  }, [location]);
+  }, [location, toast]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
-
-    const token = await fetchClientToken(employeeId, password);
-
-    if (token) {
-      // Optionally store token in localStorage/session
-      localStorage.setItem("access_token", token);
+    setIsLoading(true);
+    
+    try {
+      // As requested, no actual validation, just simulate API call with delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Always store a dummy token and redirect
+      localStorage.setItem("access_token", "dummy_token");
       navigate("/dashboard");
-    } else {
-      setError("Invalid credentials. Please try again.");
+    } catch (error) {
+      console.error("Login error:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -63,7 +74,7 @@ const Login: React.FC = () => {
       </h1>
 
       {/* Login Card */}
-      <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md p-10 transition-transform transform hover:scale-[1.01]">
+      <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md p-10 transition-all duration-300 transform hover:shadow-[0_20px_50px_rgba(93,46,255,0.2)] animate-fade-in">
         <div className="text-center mb-6">
           <p className="text-lg text-gray-600 font-medium">
             Please login to continue
@@ -79,9 +90,8 @@ const Login: React.FC = () => {
               type="text"
               value={employeeId}
               onChange={(e) => setEmployeeId(e.target.value)}
-              required
               placeholder="EMP202301"
-              className="w-full px-4 py-2"
+              className="w-full px-4 py-2 transition-all duration-200 focus:ring-2 focus:ring-primary/20 border-gray-300"
             />
           </div>
 
@@ -93,19 +103,24 @@ const Login: React.FC = () => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              required
               placeholder="••••••••"
-              className="w-full px-4 py-2"
+              className="w-full px-4 py-2 transition-all duration-200 focus:ring-2 focus:ring-primary/20 border-gray-300"
             />
           </div>
 
-          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
-
           <Button
             type="submit"
-            className="w-full py-2"
+            className="w-full py-2 bg-gradient-to-r from-[#5D2EFF] to-[#814BFE] hover:shadow-lg hover:shadow-primary/25 transition-all duration-200"
+            disabled={isLoading}
           >
-            Sign In
+            {isLoading ? (
+              <span className="flex items-center justify-center">
+                <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></span>
+                Signing In...
+              </span>
+            ) : (
+              "Sign In"
+            )}
           </Button>
         </form>
 
@@ -114,7 +129,7 @@ const Login: React.FC = () => {
             Don't have an account?{" "}
             <a 
               href="/register" 
-              className="text-indigo-600 hover:underline"
+              className="text-indigo-600 hover:underline transition-all"
               onClick={(e) => {
                 e.preventDefault();
                 navigate("/register");
