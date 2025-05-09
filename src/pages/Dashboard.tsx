@@ -1,12 +1,39 @@
 
 import React from "react";
-import Dashboard from "@/components/dashboard/Dashboard";
-import BreadcrumbNav from "@/components/BreadcrumbNav";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Mail, Printer, FileText, Settings } from "lucide-react";
+import { Mail, Printer, FileText, Settings, BarChart3, CheckCircle2, AlertTriangle, Clock, ArrowUpCircle, ArrowDownCircle } from "lucide-react";
+import BreadcrumbNav from "@/components/BreadcrumbNav";
+import Dashboard from "@/components/dashboard/Dashboard";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { Area, AreaChart, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Bar, BarChart, Legend } from "recharts";
 
 const DashboardPage: React.FC = () => {
+  // Sample data for the charts
+  const revenueData = [
+    { name: 'Jan', revenue: 1200, target: 1000 },
+    { name: 'Feb', revenue: 1900, target: 1300 },
+    { name: 'Mar', revenue: 1500, target: 1400 },
+    { name: 'Apr', revenue: 2200, target: 1800 },
+    { name: 'May', revenue: 2700, target: 2000 },
+    { name: 'Jun', revenue: 3000, target: 2200 },
+    { name: 'Jul', revenue: 2800, target: 2400 },
+    { name: 'Aug', revenue: 3300, target: 2600 },
+    { name: 'Sep', revenue: 3600, target: 2800 },
+    { name: 'Oct', revenue: 3850, target: 3000 },
+    { name: 'Nov', revenue: 4000, target: 3200 },
+    { name: 'Dec', revenue: 4200, target: 3400 },
+  ];
+
+  const retentionData = [
+    { name: 'Jan', active: 800, churned: 200 },
+    { name: 'Feb', active: 950, churned: 180 },
+    { name: 'Mar', active: 1000, churned: 220 },
+    { name: 'Apr', active: 1200, churned: 240 },
+    { name: 'May', active: 1300, churned: 260 },
+    { name: 'Jun', active: 1400, churned: 220 },
+  ];
+
   return (
     <div className="px-4 sm:container sm:mx-auto py-6 animate-fade-in">
       <div className="flex flex-col gap-6">
@@ -46,28 +73,128 @@ const DashboardPage: React.FC = () => {
             trend="1.2%"
             trendUp={true}
             subtitle="than last week"
+            icon={<BarChart3 className="h-5 w-5 text-primary opacity-70" />}
           />
           <MetricCard 
-            title="Tasks Completed" 
+            title="Unique Purchases" 
             value="3,137"
             trend="0.7%"
             trendUp={false}
             subtitle="than last week"
+            icon={<CheckCircle2 className="h-5 w-5 text-primary opacity-70" />}
           />
           <MetricCard 
-            title="Avg. Task Time" 
+            title="Avg. Order Value" 
             value="$306.20"
             trend="0.3%"
             trendUp={false}
             subtitle="than last week"
+            icon={<AlertTriangle className="h-5 w-5 text-primary opacity-70" />}
           />
           <MetricCard 
-            title="Total Projects" 
+            title="Order Quantity" 
             value="1,650"
             trend="2.1%"
             trendUp={true}
             subtitle="than last week"
+            icon={<Clock className="h-5 w-5 text-primary opacity-70" />}
           />
+        </div>
+
+        {/* Charts section */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Monthly Revenue Growth */}
+          <Card className="overflow-hidden border shadow-sm">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 bg-muted/10">
+              <div>
+                <CardTitle className="text-base font-medium">Monthly Revenue Growth</CardTitle>
+                <p className="text-sm text-muted-foreground">Monthly revenue generated over time</p>
+              </div>
+              <div className="text-right">
+                <div className="text-2xl font-bold">$620,076</div>
+                <p className="text-sm text-muted-foreground">Total MRR Growth</p>
+              </div>
+            </CardHeader>
+            <CardContent className="pt-4 pb-2">
+              <div className="h-[300px]">
+                <ChartContainer config={{
+                  revenue: { theme: { light: '#8B5CF6', dark: '#8B5CF6' } },
+                  target: { theme: { light: '#C4B5FD', dark: '#C4B5FD' } },
+                }}>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart data={revenueData} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
+                      <defs>
+                        <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#8B5CF6" stopOpacity={0.8} />
+                          <stop offset="95%" stopColor="#8B5CF6" stopOpacity={0} />
+                        </linearGradient>
+                        <linearGradient id="colorTarget" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#C4B5FD" stopOpacity={0.8} />
+                          <stop offset="95%" stopColor="#C4B5FD" stopOpacity={0} />
+                        </linearGradient>
+                      </defs>
+                      <XAxis dataKey="name" axisLine={false} tickLine={false} />
+                      <YAxis axisLine={false} tickLine={false} />
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                      <Tooltip content={<ChartTooltipContent />} />
+                      <Area type="monotone" dataKey="revenue" stroke="#8B5CF6" fillOpacity={1} fill="url(#colorRevenue)" />
+                      <Area type="monotone" dataKey="target" stroke="#C4B5FD" fillOpacity={1} fill="url(#colorTarget)" />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                </ChartContainer>
+              </div>
+              <div className="flex items-center justify-center mt-4 space-x-4 text-sm">
+                <div className="flex items-center">
+                  <div className="w-3 h-3 rounded-full bg-primary mr-2"></div>
+                  <span>Actual Revenue</span>
+                </div>
+                <div className="flex items-center">
+                  <div className="w-3 h-3 rounded-full bg-primary/30 mr-2"></div>
+                  <span>Target Revenue</span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Customer Retention */}
+          <Card className="overflow-hidden border shadow-sm">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 bg-muted/10">
+              <div>
+                <CardTitle className="text-base font-medium">Customer Retention</CardTitle>
+                <p className="text-sm text-muted-foreground">Number of customers with active subscription</p>
+              </div>
+              <div className="flex space-x-4">
+                <div className="text-right">
+                  <div className="text-lg font-bold text-green-500">$1,680.50</div>
+                  <p className="text-xs text-muted-foreground">EXPANSIONS</p>
+                </div>
+                <div className="text-right">
+                  <div className="text-lg font-bold text-red-500">$1,520.00</div>
+                  <p className="text-xs text-muted-foreground">CANCELLATIONS</p>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent className="pt-4 pb-2">
+              <div className="h-[300px]">
+                <ChartContainer config={{
+                  active: { theme: { light: '#3B82F6', dark: '#3B82F6' } },
+                  churned: { theme: { light: '#F87171', dark: '#F87171' } },
+                }}>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={retentionData} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                      <XAxis dataKey="name" axisLine={false} tickLine={false} />
+                      <YAxis axisLine={false} tickLine={false} />
+                      <Tooltip content={<ChartTooltipContent />} />
+                      <Legend />
+                      <Bar dataKey="active" name="Active Customers" fill="#3B82F6" radius={[4, 4, 0, 0]} />
+                      <Bar dataKey="churned" name="Churned Customers" fill="#F87171" radius={[4, 4, 0, 0]} />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </ChartContainer>
+              </div>
+            </CardContent>
+          </Card>
         </div>
         
         {/* Main dashboard content */}
@@ -83,19 +210,21 @@ interface MetricCardProps {
   trend: string;
   trendUp: boolean;
   subtitle: string;
+  icon?: React.ReactNode;
 }
 
-const MetricCard: React.FC<MetricCardProps> = ({ title, value, trend, trendUp, subtitle }) => {
+const MetricCard: React.FC<MetricCardProps> = ({ title, value, trend, trendUp, subtitle, icon }) => {
   return (
-    <Card className="overflow-hidden border">
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 bg-muted/20">
+    <Card className="overflow-hidden border shadow-sm hover:shadow-md transition-shadow duration-300">
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium">{title}</CardTitle>
+        {icon}
       </CardHeader>
       <CardContent className="pt-4">
         <div className="flex items-baseline">
           <div className="text-2xl font-bold">{value}</div>
-          <span className={`ml-2 text-xs ${trendUp ? 'text-green-500' : 'text-red-500'} font-medium`}>
-            {trendUp ? '↑' : '↓'} {trend}
+          <span className={`ml-2 text-xs ${trendUp ? 'text-green-500' : 'text-red-500'} font-medium flex items-center`}>
+            {trendUp ? <ArrowUpCircle className="h-3 w-3 mr-1" /> : <ArrowDownCircle className="h-3 w-3 mr-1" />} {trend}
           </span>
         </div>
         <p className="text-xs text-muted-foreground">{subtitle}</p>

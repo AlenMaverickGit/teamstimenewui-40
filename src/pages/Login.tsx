@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Check, LockKeyhole, Mail } from "lucide-react";
+import { Check, LockKeyhole, Mail, User } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -56,7 +56,7 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#1A1F2C] via-[#2A2F3C] to-[#3A3F4C] flex flex-col items-center justify-center px-4 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-[#f8fafc] to-[#e2e8f0] dark:from-[#1A1F2C] dark:via-[#2A2F3C] dark:to-[#3A3F4C] flex flex-col items-center justify-center px-4 py-8">
       {/* Success Message */}
       {showSuccessMessage && (
         <div className="fixed top-4 right-4 left-4 md:left-auto md:right-4 md:top-4 bg-green-50 border border-green-200 text-green-800 rounded-lg px-4 py-3 flex items-center justify-between shadow-lg animate-fade-in z-50 max-w-md">
@@ -74,15 +74,15 @@ const Login: React.FC = () => {
         <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center shadow-xl mr-3">
           <span className="text-white font-bold text-xl">TT</span>
         </div>
-        <h1 className="text-white text-3xl md:text-4xl font-bold">
+        <h1 className="text-foreground text-3xl md:text-4xl font-bold">
           <span className="text-primary">Teams</span>Time
         </h1>
       </div>
 
       {/* Login Card */}
-      <Card className="w-full max-w-md shadow-2xl border-0 bg-card/95 backdrop-blur-sm">
+      <Card className="w-full max-w-md shadow-lg border-0 bg-card/95 backdrop-blur-sm">
         <CardHeader className="space-y-1 pb-4">
-          <CardTitle className="text-2xl font-bold text-center">Sign In</CardTitle>
+          <CardTitle className="text-2xl font-bold text-center">Welcome Back</CardTitle>
           <CardDescription className="text-center">
             Enter your credentials to access your account
           </CardDescription>
@@ -96,7 +96,7 @@ const Login: React.FC = () => {
               </label>
               <div className="relative">
                 <span className="absolute left-3 top-2.5 text-muted-foreground">
-                  <Mail size={18} />
+                  <User size={18} />
                 </span>
                 <Input
                   id="employeeId"
@@ -168,7 +168,7 @@ const Login: React.FC = () => {
         </form>
       </Card>
       
-      <p className="text-xs text-center text-white/50 mt-8">
+      <p className="text-xs text-center text-foreground/50 mt-8">
         © 2025 TeamsTime. All rights reserved.
       </p>
     </div>

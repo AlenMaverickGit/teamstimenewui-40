@@ -16,6 +16,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import VerifyOTP from "./pages/VerifyOTP";
 import CreatePassword from "./pages/CreatePassword";
+import UserProfile from "./pages/UserProfile";
 
 const queryClient = new QueryClient();
 
@@ -106,6 +107,19 @@ const App = () => {
                       <AppHeader />
                       <main className="flex-1">
                         <Timesheet />
+                      </main>
+                    </>
+                  </AuthenticatedRoute>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <AuthenticatedRoute>
+                    <>
+                      <AppHeader />
+                      <main className="flex-1">
+                        <UserProfile />
                       </main>
                     </>
                   </AuthenticatedRoute>
