@@ -1,13 +1,32 @@
-// Login.tsx
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { fetchClientToken } from "../../src/services/tokenservice";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Check } from "lucide-react";
 
 const Login: React.FC = () => {
   const [employeeId, setEmployeeId] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    // Check if user was redirected from successful registration
+    if (location.state?.registrationSuccess) {
+      setShowSuccessMessage(true);
+      
+      // Hide success message after 5 seconds
+      const timer = setTimeout(() => {
+        setShowSuccessMessage(false);
+      }, 5000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [location]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,6 +45,18 @@ const Login: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#5D2EFF] via-[#6B2BEB] to-[#814BFE] flex flex-col items-center justify-center px-4 py-8">
+      {/* Success Message */}
+      {showSuccessMessage && (
+        <div className="fixed top-4 right-4 left-4 md:left-auto md:right-4 md:top-4 bg-green-50 border border-green-200 text-green-800 rounded-lg px-4 py-3 flex items-center justify-between shadow-lg animate-fade-in z-50 max-w-md">
+          <div className="flex items-center">
+            <div className="mr-2 bg-green-100 rounded-full p-1">
+              <Check size={18} className="text-green-600" />
+            </div>
+            <p>Account created successfully! Please sign in.</p>
+          </div>
+        </div>
+      )}
+
       {/* Welcome Message */}
       <h1 className="text-white text-4xl md:text-5xl font-bold mb-8 drop-shadow-lg">
         Welcome to <span className="text-yellow-300">TeamsTime</span>
@@ -44,13 +75,13 @@ const Login: React.FC = () => {
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Employee ID
             </label>
-            <input
+            <Input
               type="text"
-              className="w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
               value={employeeId}
               onChange={(e) => setEmployeeId(e.target.value)}
               required
               placeholder="EMP202301"
+              className="w-full px-4 py-2"
             />
           </div>
 
@@ -58,25 +89,41 @@ const Login: React.FC = () => {
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Password
             </label>
-            <input
+            <Input
               type="password"
-              className="w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
               placeholder="••••••••"
+              className="w-full px-4 py-2"
             />
           </div>
 
           {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
-          <button
+          <Button
             type="submit"
-            className="w-full py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold shadow-md transition duration-300"
+            className="w-full py-2"
           >
             Sign In
-          </button>
+          </Button>
         </form>
+
+        <div className="text-center mt-6">
+          <p className="text-sm text-gray-600">
+            Don't have an account?{" "}
+            <a 
+              href="/register" 
+              className="text-indigo-600 hover:underline"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("/register");
+              }}
+            >
+              Sign Up
+            </a>
+          </p>
+        </div>
 
         <p className="text-xs text-center text-gray-400 mt-6">
           Powered by{" "}
