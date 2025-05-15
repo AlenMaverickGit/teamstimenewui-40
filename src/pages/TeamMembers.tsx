@@ -23,18 +23,39 @@ const TeamMembersPage: React.FC = () => {
     //   </div>
     // </div>
 
+    // <div className="px-2 sm:container sm:mx-auto py-6">
+    //   <div className="flex items-center justify-between flex-wrap gap-4 mb-6">
+    //     <BreadcrumbNav />
+    //     <Button className="h-8 px-3 py-1.5 text-sm gap-2 shadow-sm transition-all hover:translate-y-[-1px]">
+    //       {/* <UserPlus className="h-4 w-4" /> */}
+    //       <UserCog className="h-4 w-4" />
+    //       Manage Users
+    //     </Button>
+    //     <Button className="h-8 px-3 py-1.5 text-sm gap-2 shadow-sm transition-all hover:translate-y-[-1px]">
+    //       <UserPlus className="h-4 w-4" />
+    //       Add Team Member
+    //     </Button>
+    //   </div>
+
+    //   <div className="flex flex-col gap-6">
+    //     <TeamOverview />
+    //   </div>
+    // </div>
+
     <div className="px-2 sm:container sm:mx-auto py-6">
       <div className="flex items-center justify-between flex-wrap gap-4 mb-6">
         <BreadcrumbNav />
-        <Button className="h-8 px-3 py-1.5 text-sm gap-2 shadow-sm transition-all hover:translate-y-[-1px]">
-          {/* <UserPlus className="h-4 w-4" /> */}
-          <UserCog className="h-4 w-4" />
-          Manage Users
-        </Button>
-        <Button className="h-8 px-3 py-1.5 text-sm gap-2 shadow-sm transition-all hover:translate-y-[-1px]">
-          <UserPlus className="h-4 w-4" />
-          Add Team Member
-        </Button>
+
+        <div className="flex gap-2">
+          <Button className="h-8 px-3 py-1.5 text-sm gap-2 shadow-sm transition-all hover:translate-y-[-1px]">
+            <UserCog className="h-4 w-4" />
+            Manage Users
+          </Button>
+          <Button className="h-8 px-3 py-1.5 text-sm gap-2 shadow-sm transition-all hover:translate-y-[-1px]">
+            <UserPlus className="h-4 w-4" />
+            Add Team Member
+          </Button>
+        </div>
       </div>
 
       <div className="flex flex-col gap-6">
