@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
@@ -27,6 +28,8 @@ import {
 import TaskCard from "@/components/tasks/TaskCard";
 import TaskFormDialog from "@/components/tasks/TaskFormDialog";
 import { format } from "date-fns";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { getAvatarColor, getRoleColor } from "@/utils/userStyles";
 
 const ProjectDetails: React.FC = () => {
   const { projectId } = useParams<{ projectId: string }>();
@@ -282,27 +285,37 @@ const ProjectDetails: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {projectTeam.map((member) => (
-              <Card key={member?.id}>
-                <CardContent className="pt-6">
-                  <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 rounded-full overflow-hidden">
-                      <img
-                        src={member?.avatarUrl}
-                        alt={member?.name}
-                        className="w-full h-full object-cover"
-                      />
+            {projectTeam.map((member) => {
+              if (!member) return null;
+              const initials = member.name.slice(0, 2).toUpperCase();
+              
+              return (
+                <Card key={member.id}>
+                  <CardContent className="pt-6">
+                    <div className="flex items-center gap-4">
+                      <Avatar className="h-12 w-12">
+                        <AvatarImage src={member.avatarUrl} alt={member.name} />
+                        <AvatarFallback className={getAvatarColor(initials)}>
+                          {initials}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1">
+                        <h3 className="font-medium">{member.name}</h3>
+                        <div className="flex items-center justify-between mt-1">
+                          <Badge
+                            variant="outline"
+                            className={getRoleColor(member.role)}
+                          >
+                            {member.role}
+                          </Badge>
+                          <p className="text-xs text-muted-foreground">{member.email}</p>
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="font-medium">{member?.name}</h3>
-                      <p className="text-sm text-muted-foreground">
-                        {member?.role}
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </TabsContent>
       </Tabs>

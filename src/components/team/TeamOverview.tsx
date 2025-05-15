@@ -1,3 +1,4 @@
+
 import React from "react";
 import {
   Card,
@@ -23,10 +24,11 @@ import {
   formatTimeHoursMinutes,
   getStatusFromProgress,
 } from "@/utils/timeUtils";
-import { tasks, users, getTasksByAssigneeId } from "@/utils/dummyData";
+import { getTasksByAssigneeId, users } from "@/utils/dummyData";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import EmployeeAppend from "../../components/NewEmpAppen/EmployeeAppend";
+import { getAvatarColor, getRoleColor, getWorkloadStatusColor } from "@/utils/userStyles";
 
 const TeamOverview: React.FC = () => {
   //Code added by Durgesh Dalvi
@@ -150,21 +152,7 @@ const TeamMemberRow: React.FC<TeamMemberRowProps> = ({ user }) => {
   };
 
   const workloadStatus = getWorkloadStatus();
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "overloaded":
-        return "bg-status-delayed text-white";
-      case "busy":
-        return "bg-amber-500 text-white";
-      case "normal":
-        return "bg-status-inprogress text-white";
-      case "available":
-        return "bg-status-complete text-white";
-      default:
-        return "bg-gray-200";
-    }
-  };
+  const initials = user.name.slice(0, 2).toUpperCase();
 
   return (
     <TableRow>
@@ -172,8 +160,8 @@ const TeamMemberRow: React.FC<TeamMemberRowProps> = ({ user }) => {
         <div className="flex items-center gap-3">
           <Avatar>
             <AvatarImage src={user.avatarUrl} alt={user.name} />
-            <AvatarFallback>
-              {user.name.slice(0, 2).toUpperCase()}
+            <AvatarFallback className={getAvatarColor(initials)}>
+              {initials}
             </AvatarFallback>
           </Avatar>
           <div>
@@ -182,7 +170,14 @@ const TeamMemberRow: React.FC<TeamMemberRowProps> = ({ user }) => {
           </div>
         </div>
       </TableCell>
-      <TableCell>{user.role}</TableCell>
+      <TableCell>
+        <Badge
+          variant="outline"
+          className={getRoleColor(user.role)}
+        >
+          {user.role}
+        </Badge>
+      </TableCell>
       <TableCell>
         {user.completedTasks}/{user.totalTasks}
         {user.delayedTasks > 0 && (
@@ -207,7 +202,7 @@ const TeamMemberRow: React.FC<TeamMemberRowProps> = ({ user }) => {
         </div>
       </TableCell>
       <TableCell>
-        <Badge variant="outline" className={getStatusColor(workloadStatus)}>
+        <Badge variant="outline" className={getWorkloadStatusColor(workloadStatus)}>
           {workloadStatus.charAt(0).toUpperCase() + workloadStatus.slice(1)}
         </Badge>
       </TableCell>
@@ -225,21 +220,7 @@ const MobileTeamMemberCard: React.FC<TeamMemberRowProps> = ({ user }) => {
   };
 
   const workloadStatus = getWorkloadStatus();
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "overloaded":
-        return "bg-status-delayed text-white";
-      case "busy":
-        return "bg-amber-500 text-white";
-      case "normal":
-        return "bg-status-inprogress text-white";
-      case "available":
-        return "bg-status-complete text-white";
-      default:
-        return "bg-gray-200";
-    }
-  };
+  const initials = user.name.slice(0, 2).toUpperCase();
 
   return (
     <div className="bg-card rounded-lg shadow-sm p-4 border">
@@ -247,14 +228,14 @@ const MobileTeamMemberCard: React.FC<TeamMemberRowProps> = ({ user }) => {
         <div className="flex items-center gap-3">
           <Avatar>
             <AvatarImage src={user.avatarUrl} alt={user.name} />
-            <AvatarFallback>{user.name.slice(0, 2).toUpperCase()}</AvatarFallback>
+            <AvatarFallback className={getAvatarColor(initials)}>{initials}</AvatarFallback>
           </Avatar>
           <div>
             <p className="font-medium">{user.name}</p>
             <p className="text-xs text-muted-foreground">{user.email}</p>
           </div>
         </div>
-        <Badge variant="outline" className={getStatusColor(workloadStatus)}>
+        <Badge variant="outline" className={getWorkloadStatusColor(workloadStatus)}>
           {workloadStatus.charAt(0).toUpperCase() + workloadStatus.slice(1)}
         </Badge>
       </div>
@@ -262,7 +243,12 @@ const MobileTeamMemberCard: React.FC<TeamMemberRowProps> = ({ user }) => {
       <div className="grid grid-cols-2 gap-y-3 text-sm">
         <div>
           <p className="text-muted-foreground">Role</p>
-          <p className="font-medium">{user.role}</p>
+          <Badge
+            variant="outline"
+            className={`mt-1 ${getRoleColor(user.role)}`}
+          >
+            {user.role}
+          </Badge>
         </div>
         
         <div>
