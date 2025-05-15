@@ -14,6 +14,7 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [showInviteSuccessMessage, setShowInviteSuccessMessage] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   
   const navigate = useNavigate();
@@ -34,6 +35,24 @@ const Login: React.FC = () => {
       // Hide success message after 5 seconds
       const timer = setTimeout(() => {
         setShowSuccessMessage(false);
+      }, 5000);
+      
+      return () => clearTimeout(timer);
+    }
+    
+    // Check if user was redirected from successful invited signup
+    if (location.state?.inviteSuccess) {
+      setShowInviteSuccessMessage(true);
+      
+      toast({
+        title: "Account setup complete!",
+        description: "You can now login with your credentials.",
+        duration: 5000
+      });
+      
+      // Hide success message after 5 seconds
+      const timer = setTimeout(() => {
+        setShowInviteSuccessMessage(false);
       }, 5000);
       
       return () => clearTimeout(timer);
@@ -59,7 +78,7 @@ const Login: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#1a4d7c] via-[#2980B9] to-[#3498DB] flex flex-col items-center justify-center px-4 py-8">
-      {/* Success Message */}
+      {/* Success Message - Registration */}
       {showSuccessMessage && (
         <div className="fixed top-4 right-4 left-4 md:left-auto md:right-4 md:top-4 bg-green-50 border border-green-200 text-green-800 rounded-lg px-4 py-3 flex items-center justify-between shadow-lg animate-fade-in z-50 max-w-md">
           <div className="flex items-center">
@@ -67,6 +86,18 @@ const Login: React.FC = () => {
               <Check size={18} className="text-green-600" />
             </div>
             <p>Account created successfully! Please sign in.</p>
+          </div>
+        </div>
+      )}
+
+      {/* Success Message - Invited Signup */}
+      {showInviteSuccessMessage && (
+        <div className="fixed top-4 right-4 left-4 md:left-auto md:right-4 md:top-4 bg-green-50 border border-green-200 text-green-800 rounded-lg px-4 py-3 flex items-center justify-between shadow-lg animate-fade-in z-50 max-w-md">
+          <div className="flex items-center">
+            <div className="mr-2 bg-green-100 rounded-full p-1">
+              <Check size={18} className="text-green-600" />
+            </div>
+            <p>Account setup complete! Please sign in.</p>
           </div>
         </div>
       )}

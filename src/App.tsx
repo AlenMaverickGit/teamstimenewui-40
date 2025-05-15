@@ -16,6 +16,8 @@ import AppHeader from "./components/AppHeader";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import VerifyOTP from "./pages/VerifyOTP";
+import InvitedSignup from "./pages/InvitedSignup";
+import VerifyInviteOTP from "./pages/VerifyInviteOTP";
 
 const queryClient = new QueryClient();
 
@@ -43,6 +45,8 @@ const App = () => {
               <Route path="/" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/verify-otp" element={<VerifyOTP />} />
+              <Route path="/invited-signup" element={<InvitedSignup />} />
+              <Route path="/verify-invite-otp" element={<VerifyInviteOTP />} />
               
               {/* App Routes - With Header */}
               <Route
