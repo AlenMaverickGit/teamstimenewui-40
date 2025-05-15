@@ -1,4 +1,3 @@
-
 import React from "react";
 import { getTeamStatistics, getProjectStatistics } from "@/utils/dummyData";
 import {
@@ -331,7 +330,7 @@ const TeamPerformanceDashboard: React.FC = () => {
               </CardContent>
             </Card>
             {/* Time Comparison Chart (spans two columns on desktop) */}
-            <Card className="shadow-sm min-h-[360px] !p-0 rounded-lg md:col-span-2">
+            <Card className="shadow-sm h-[800px] min-h-[360px] !p-0 rounded-lg md:col-span-2">
               <CardHeader>
                 <CardTitle className="flex items-center">
                   <AlertTriangle className="mr-2 h-5 w-5 text-primary" />
@@ -539,4 +538,3 @@ const TeamPerformanceDashboard: React.FC = () => {
 };
 
 export default TeamPerformanceDashboard;
-

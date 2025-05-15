@@ -78,12 +78,12 @@ const ProjectDetails: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      {/* <div className="flex justify-between items-center">
         <Button variant="ghost" onClick={goBack} className="flex items-center">
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Projects
         </Button>
-      </div>
+      </div> */}
 
       <Card>
         <CardHeader>
