@@ -3,6 +3,7 @@ import TeamOverview from "@/components/team/TeamOverview";
 import BreadcrumbNav from "@/components/BreadcrumbNav";
 import { Button } from "@/components/ui/button";
 import { UserPlus } from "lucide-react";
+import { UserCog } from "lucide-react";
 
 const TeamMembersPage: React.FC = () => {
   return (
