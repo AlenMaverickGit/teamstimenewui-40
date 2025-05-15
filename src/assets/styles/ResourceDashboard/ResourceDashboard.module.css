@@ -1,7 +1,9 @@
+
 /* ResourceDashboard.module.css */
 .table {
   width: 100%;
   border-collapse: collapse;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 th {
@@ -9,11 +11,22 @@ th {
   top: 0px; /* Distance from the viewport top */
   background-color: white;
   z-index: 10;
-  border-bottom: 2px solid #ccc;
-  padding: 12px;
+  border-bottom: 1px solid #eee;
+  padding: 8px 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #64748b;
+  text-align: left;
+  letter-spacing: -0.01em;
 }
 
 td {
-  padding: 12px;
-  border-bottom: 1px solid #eee;
+  padding: 8px 10px;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 0.8125rem;
+  letter-spacing: -0.01em;
+}
+
+tr:hover td {
+  background-color: #f8fafc;
 }

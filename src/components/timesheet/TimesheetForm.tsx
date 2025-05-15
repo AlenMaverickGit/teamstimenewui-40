@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
@@ -138,37 +139,37 @@ const TimesheetForm: React.FC = () => {
   }, [totalTimeTracked, totalPlannedTime]);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="col-span-1 md:col-span-3">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Clock className="h-5 w-5 text-primary" />
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <Card className="col-span-1 md:col-span-3 shadow-sm border-border/40">
+          <CardHeader className="pb-2 px-3 py-2.5">
+            <CardTitle className="text-sm flex items-center gap-1.5">
+              <Clock className="h-4 w-4 text-primary" />
               Weekly Summary
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="bg-card shadow-sm border rounded-lg p-4">
-                <div className="text-sm text-muted-foreground">
+          <CardContent className="pt-0 pb-3 px-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+              <div className="bg-card shadow-sm border border-border/30 rounded-lg p-3">
+                <div className="text-xs text-muted-foreground">
                   Planned Time
                 </div>
-                <div className="text-2xl font-bold">
+                <div className="text-xl font-semibold">
                   {Math.floor(timesheetSummary.totalPlannedTime / 60)}h{" "}
                   {timesheetSummary.totalPlannedTime % 60}m
                 </div>
               </div>
-              <div className="bg-card shadow-sm border rounded-lg p-4">
-                <div className="text-sm text-muted-foreground">Actual Time</div>
-                <div className="text-2xl font-bold">
+              <div className="bg-card shadow-sm border border-border/30 rounded-lg p-3">
+                <div className="text-xs text-muted-foreground">Actual Time</div>
+                <div className="text-xl font-semibold">
                   {Math.floor(timesheetSummary.totalTimeTracked / 60)}h{" "}
                   {timesheetSummary.totalTimeTracked % 60}m
                 </div>
               </div>
-              <div className="bg-card shadow-sm border rounded-lg p-4">
-                <div className="text-sm text-muted-foreground">Variance</div>
+              <div className="bg-card shadow-sm border border-border/30 rounded-lg p-3">
+                <div className="text-xs text-muted-foreground">Variance</div>
                 <div
-                  className={`text-2xl font-bold ${
+                  className={`text-xl font-semibold ${
                     timesheetSummary.variance > 0
                       ? "text-orange-500"
                       : timesheetSummary.variance < 0
@@ -181,9 +182,9 @@ const TimesheetForm: React.FC = () => {
                   {Math.abs(timesheetSummary.variance % 60)}m
                 </div>
               </div>
-              <div className="bg-card shadow-sm border rounded-lg p-4">
-                <div className="text-sm text-muted-foreground">Completion</div>
-                <div className="text-2xl font-bold">
+              <div className="bg-card shadow-sm border border-border/30 rounded-lg p-3">
+                <div className="text-xs text-muted-foreground">Completion</div>
+                <div className="text-xl font-semibold">
                   {timesheetSummary.percentageComplete}%
                 </div>
               </div>
@@ -193,12 +194,12 @@ const TimesheetForm: React.FC = () => {
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="mb-4 w-full h-auto flex-wrap gap-2">
+        <TabsList className="mb-3 w-full h-auto flex-wrap gap-2">
           {userProjects.map((project) => (
             <TabsTrigger
               key={project.id}
               value={project.id}
-              className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+              className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground text-xs py-1"
             >
               {project.name}
             </TabsTrigger>
@@ -206,7 +207,7 @@ const TimesheetForm: React.FC = () => {
         </TabsList>
 
         {userProjects.map((project) => (
-          <TabsContent key={project.id} value={project.id} className="pt-2">
+          <TabsContent key={project.id} value={project.id} className="pt-1">
             <ProjectTimesheet
               project={project}
               tasks={getUserProjectTasks(project.id)}
@@ -221,9 +222,10 @@ const TimesheetForm: React.FC = () => {
       <div className="flex justify-end">
         <Button
           type="submit"
-          className="shadow-neon transition-all hover:translate-y-[-2px]"
+          className="shadow-sm transition-all hover:translate-y-[-1px] text-sm py-1.5"
+          size="sm"
         >
-          <Save className="mr-2 h-4 w-4" />
+          <Save className="mr-1.5 h-3.5 w-3.5" />
           Save Timesheet
         </Button>
       </div>

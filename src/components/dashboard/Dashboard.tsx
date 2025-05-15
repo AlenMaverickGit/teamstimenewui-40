@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import {
   Card,
@@ -8,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
 import {
   BarChart3,
   Clock,
@@ -20,7 +21,6 @@ import {
   PieChart,
   Users,
   Boxes,
-  ArrowUpCircle,
 } from "lucide-react";
 import { projects, tasks, users } from "@/utils/dummyData";
 import {
@@ -33,6 +33,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { fetchClientToken } from "../../services/tokenservicestatic";
 import ResourceDashboard from "./ResourceDashboard";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface Category {
   categoryDesc: string;
@@ -108,8 +109,9 @@ const Dashboard: React.FC = () => {
   console.log("designation:", designation);
 
   //End of added implementation
-
+  
   const [activeView, setActiveView] = useState("overview");
+  const isMobile = useIsMobile();
 
   // Calculate dashboard metrics
   const totalProjects = projects.length;
@@ -195,338 +197,292 @@ const Dashboard: React.FC = () => {
     })
     .sort((a, b) => b.taskCount - a.taskCount);
 
+  // Tab button handler
+  const handleTabChange = (tabValue: string) => {
+    setActiveView(tabValue);
+  };
+
   return (
-    <div className="space-y-6">
-      <Tabs value={activeView} onValueChange={setActiveView} className="w-full">
-        <TabsList
-          className="
-            grid w-full
-            grid-cols-2      // <<< Change: two columns on smallest screens
-            sm:grid-cols-2
-            md:grid-cols-4
-            gap-2
-            mb-6
-            p-1
-            bg-card/70
-            rounded-lg
-            shadow-sm
-            [&>*]:transition-all
-          "
-        >
-          <TabsTrigger
-            value="overview"
-            className="
-              flex flex-row items-center justify-center gap-2
-              w-full
-              py-3
-              text-base
-              font-medium
-              rounded-md
-              shadow-sm
-              bg-background/80
-              hover:bg-accent/40
-              active:bg-accent/60
-              aria-[selected=true]:bg-primary aria-[selected=true]:text-primary-foreground
-              aria-[selected=true]:shadow
-              transition-all
-              duration-200
-            "
-          >
-            <BarChart className="h-5 w-5 sm:h-4 sm:w-4" />
-            <span className="block">Overview</span>
-          </TabsTrigger>
+    <div className="space-y-5">
+      <div className="space-y-5">
+        <div className="relative z-20 mb-5">
+          <div className="flex flex-wrap gap-1.5 w-full">
+            <Button
+              onClick={() => handleTabChange("overview")}
+              variant={activeView === "overview" ? "subtle" : "outline"}
+              className="h-8 rounded-md flex items-center gap-1 py-1 text-xs font-medium border transition-all flex-1 min-w-[70px] justify-center max-w-[160px]"
+              size="sm"
+            >
+              <BarChart className="h-3 w-3" />
+              <span>Overview</span>
+            </Button>
 
-          <TabsTrigger
-            value="projects"
-            className="
-              flex flex-row items-center justify-center gap-2
-              w-full
-              py-3
-              text-base
-              font-medium
-              rounded-md
-              shadow-sm
-              bg-background/80
-              hover:bg-accent/40
-              active:bg-accent/60
-              aria-[selected=true]:bg-primary aria-[selected=true]:text-primary-foreground
-              aria-[selected=true]:shadow
-              transition-all
-              duration-200
-            "
-          >
-            <PieChart className="h-5 w-5 sm:h-4 sm:w-4" />
-            <span className="block">Projects</span>
-          </TabsTrigger>
+            <Button
+              onClick={() => handleTabChange("projects")}
+              variant={activeView === "projects" ? "subtle" : "outline"}
+              className="h-8 rounded-md flex items-center gap-1 py-1 text-xs font-medium border transition-all flex-1 min-w-[70px] justify-center max-w-[160px]"
+              size="sm"
+            >
+              <PieChart className="h-3 w-3" />
+              <span>Projects</span>
+            </Button>
 
-          <TabsTrigger
-            value="team"
-            className="
-              flex flex-row items-center justify-center gap-2
-              w-full
-              py-3
-              text-base
-              font-medium
-              rounded-md
-              shadow-sm
-              bg-background/80
-              hover:bg-accent/40
-              active:bg-accent/60
-              aria-[selected=true]:bg-primary aria-[selected=true]:text-primary-foreground
-              aria-[selected=true]:shadow
-              transition-all
-              duration-200
-            "
-          >
-            <Users className="h-5 w-5 sm:h-4 sm:w-4" />
-            <span className="block">Team Performance</span>
-          </TabsTrigger>
+            <Button
+              onClick={() => handleTabChange("team")}
+              variant={activeView === "team" ? "subtle" : "outline"}
+              className="h-8 rounded-md flex items-center gap-1 py-1 text-xs font-medium border transition-all flex-1 min-w-[70px] justify-center max-w-[160px]"
+              size="sm"
+            >
+              <Users className="h-3 w-3" />
+              <span>Team</span>
+            </Button>
 
-          <TabsTrigger
-            value="resource"
-            className="
-              flex flex-row items-center justify-center gap-2
-              w-full
-              py-3
-              text-base
-              font-medium
-              rounded-md
-              shadow-sm
-              bg-background/80
-              hover:bg-accent/40
-              active:bg-accent/60
-              aria-[selected=true]:bg-primary aria-[selected=true]:text-primary-foreground
-              aria-[selected=true]:shadow
-              transition-all
-              duration-200
-            "
-          >
-            <Boxes className="h-5 w-5 sm:h-4 sm:w-4" />
-            <span className="block">Resource Allocation</span>
-          </TabsTrigger>
-        </TabsList>
-        <br /> <br /> <br />
-        <TabsContent value="overview" className="space-y-6 animate-fade-in">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {/* Summary Cards */}
-            <Card className="overflow-hidden transition-all hover:shadow-md">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 bg-muted/20">
-                <CardTitle className="text-sm font-medium">
-                  Total Projects
-                </CardTitle>
-                <BarChart3 className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent className="pt-4">
-                <div className="text-2xl font-bold">{totalProjects}</div>
-                <p className="text-xs text-muted-foreground">Active projects</p>
-              </CardContent>
-            </Card>
-
-            <Card className="overflow-hidden transition-all hover:shadow-md">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 bg-muted/20">
-                <CardTitle className="text-sm font-medium">
-                  Tasks Completed
-                </CardTitle>
-                <CheckCircle2 className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent className="pt-4">
-                <div className="text-2xl font-bold">
-                  {completedTasks} / {totalTasks}
-                </div>
-                <Progress
-                  value={(completedTasks / totalTasks) * 100}
-                  className="mt-2"
-                />
-              </CardContent>
-            </Card>
-
-            <Card className="overflow-hidden transition-all hover:shadow-md">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 bg-muted/20">
-                <CardTitle className="text-sm font-medium">
-                  Delayed Tasks
-                </CardTitle>
-                <AlertTriangle className="h-4 w-4 text-status-delayed" />
-              </CardHeader>
-              <CardContent className="pt-4">
-                <div className="text-2xl font-bold">{delayedTasks}</div>
-                <p className="text-xs text-muted-foreground">
-                  Tasks behind schedule
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="overflow-hidden transition-all hover:shadow-md">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 bg-muted/20">
-                <CardTitle className="text-sm font-medium">
-                  Total Time
-                </CardTitle>
-                <Clock className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent className="pt-4">
-                <div className="text-2xl font-bold">
-                  {formatTimeHoursMinutes(totalTimeSpent)}
-                </div>
-                <p className="text-xs text-muted-foreground">
-                  Hours tracked this month
-                </p>
-              </CardContent>
-            </Card>
+            <Button
+              onClick={() => handleTabChange("resource")}
+              variant={activeView === "resource" ? "subtle" : "outline"}
+              className="h-8 rounded-md flex items-center gap-1 py-1 text-xs font-medium border transition-all flex-1 min-w-[70px] justify-center max-w-[160px]"
+              size="sm"
+            >
+              <Boxes className="h-3 w-3" />
+              <span>Resources</span>
+            </Button>
           </div>
+        </div>
+        
+        <div className="mt-4 pt-0 sm:mt-1 sm:pt-0 relative z-10">
+          {activeView === "overview" && (
+            <div className="space-y-5 animate-fade-in">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+                {/* Summary Cards */}
+                <Card className="overflow-hidden transition-all hover:shadow-md">
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 bg-muted/10">
+                    <CardTitle className="text-sm font-medium">
+                      Total Projects
+                    </CardTitle>
+                    <BarChart3 className="h-4 w-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent className="pt-3">
+                    <div className="text-2xl font-bold">{totalProjects}</div>
+                    <p className="text-xs text-muted-foreground mt-1">Active projects</p>
+                  </CardContent>
+                </Card>
 
-          {/* Task Highlights */}
-          <Card className="overflow-hidden">
-            <CardHeader className="bg-muted/20">
-              <CardTitle>Task Highlights</CardTitle>
-              <CardDescription>
-                Tasks that need attention or were completed early
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="pt-6">
-              <div className="space-y-4">
-                {taskHighlights.map((task) => (
-                  <Alert
-                    key={task.id}
-                    className={`border-l-4 ${
-                      task.status === "delayed"
-                        ? "border-l-status-delayed"
-                        : "border-l-status-complete"
-                    } hover:bg-muted/10 transition-colors rounded-md`}
-                  >
-                    <div className="flex items-start">
-                      {task.status === "delayed" ? (
-                        <AlertTriangle className="h-4 w-4 text-status-delayed mr-2 mt-1" />
-                      ) : (
-                        <CheckCircle2 className="h-4 w-4 text-status-complete mr-2 mt-1" />
-                      )}
-
-                      <div className="flex-1 space-y-1">
-                        {/* Title and Status Label */}
-                        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
-                          <AlertTitle className="text-base">
-                            {task.title}
-                          </AlertTitle>
-                          <span
-                            className={`text-xs rounded-full px-2 py-1 mt-1 sm:mt-0 w-max ${
-                              task.status === "delayed"
-                                ? "bg-status-delayed/10 text-status-delayed"
-                                : "bg-status-complete/10 text-status-complete"
-                            }`}
-                          >
-                            {task.status === "delayed"
-                              ? "Delayed"
-                              : "Early Completion"}
-                          </span>
-                        </div>
-
-                        {/* Project & Assignee */}
-                        <div className="flex flex-col sm:flex-row sm:items-center text-muted-foreground text-xs mt-1">
-                          <div className="flex items-center mb-1 sm:mb-0">
-                            <Calendar className="h-3 w-3 mr-1" />
-                            {task.projectName}
-                          </div>
-                          <span className="hidden sm:inline mx-2">•</span>
-                          <div className="flex items-center">
-                            <User className="h-3 w-3 mr-1" />
-                            {task.assigneeName}
-                          </div>
-                        </div>
-
-                        {/* Status & Time */}
-                        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center text-sm">
-                          <span className="text-muted-foreground">
-                            {task.status === "delayed"
-                              ? "Taking longer than estimated"
-                              : "Completed ahead of schedule"}
-                          </span>
-                          <span className="font-medium">
-                            {formatTimeHoursMinutes(task.timeSpent)} /{" "}
-                            {formatTimeHoursMinutes(task.estimatedTime)}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </Alert>
-                ))}
-
-                {taskHighlights.length === 0 && (
-                  <div className="text-center py-4 text-muted-foreground">
-                    No task highlights to display
-                  </div>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-        <TabsContent value="projects" className="space-y-6 animate-fade-in">
-          <Card className="overflow-hidden">
-            <CardHeader className="bg-muted/20">
-              <CardTitle>Project Progress</CardTitle>
-              <CardDescription>
-                Overall completion status of active projects
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="pt-6">
-              <div className="space-y-6">
-                {projectProgress.map((project) => (
-                  <div
-                    key={project.id}
-                    className="space-y-2 p-4 rounded-lg border hover:bg-muted/10 transition-colors"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="font-medium">{project.name}</p>
-                        <p className="text-sm text-muted-foreground">
-                          {project.completedTasks} of {project.totalTasks} tasks
-                          completed
-                        </p>
-                      </div>
-                      <div className="flex items-center">
-                        <div
-                          className={`w-12 h-12 rounded-full flex items-center justify-center mr-4 ${
-                            project.progress === 100
-                              ? "bg-status-complete/10"
-                              : project.progress >= 50
-                              ? "bg-status-inprogress/10"
-                              : "bg-muted/20"
-                          }`}
-                        >
-                          <span
-                            className={`text-sm font-bold ${
-                              project.progress === 100
-                                ? "text-status-complete"
-                                : project.progress >= 50
-                                ? "text-status-inprogress"
-                                : "text-muted-foreground"
-                            }`}
-                          >
-                            {project.progress}%
-                          </span>
-                        </div>
-                      </div>
+                <Card className="overflow-hidden transition-all hover:shadow-md">
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 bg-muted/10">
+                    <CardTitle className="text-sm font-medium">
+                      Tasks Completed
+                    </CardTitle>
+                    <CheckCircle2 className="h-4 w-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent className="pt-3">
+                    <div className="text-2xl font-bold">
+                      {completedTasks} / {totalTasks}
                     </div>
                     <Progress
-                      value={project.progress}
-                      className={`${
-                        project.progress === 100
-                          ? "bg-status-complete/20"
-                          : project.progress >= 50
-                          ? "bg-status-inprogress/20"
-                          : "bg-muted/30"
-                      }`}
+                      value={(completedTasks / totalTasks) * 100}
+                      className="mt-2"
                     />
-                  </div>
-                ))}
+                  </CardContent>
+                </Card>
+
+                <Card className="overflow-hidden transition-all hover:shadow-md">
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 bg-muted/10">
+                    <CardTitle className="text-sm font-medium">
+                      Delayed Tasks
+                    </CardTitle>
+                    <AlertTriangle className="h-4 w-4 text-status-delayed" />
+                  </CardHeader>
+                  <CardContent className="pt-3">
+                    <div className="text-2xl font-bold">{delayedTasks}</div>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Tasks behind schedule
+                    </p>
+                  </CardContent>
+                </Card>
+
+                <Card className="overflow-hidden transition-all hover:shadow-md">
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 bg-muted/10">
+                    <CardTitle className="text-sm font-medium">
+                      Total Time
+                    </CardTitle>
+                    <Clock className="h-4 w-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent className="pt-3">
+                    <div className="text-2xl font-bold">
+                      {formatTimeHoursMinutes(totalTimeSpent)}
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Hours tracked this month
+                    </p>
+                  </CardContent>
+                </Card>
               </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-        <TabsContent value="team" className="animate-fade-in">
-          <TeamPerformanceDashboard />
-        </TabsContent>
-        <TabsContent value="resource" className="animate-fade-in">
-          <ResourceDashboard />
-        </TabsContent>
-      </Tabs>
+
+              {/* Task Highlights */}
+              <Card className="overflow-hidden">
+                <CardHeader className="bg-muted/10 pb-3">
+                  <CardTitle className="text-sm font-medium">Task Highlights</CardTitle>
+                  <CardDescription className="text-xs">
+                    Tasks that need attention or were completed early
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="pt-4">
+                  <div className="space-y-3">
+                    {taskHighlights.map((task) => (
+                      <Alert
+                        key={task.id}
+                        className={`border-l-4 ${
+                          task.status === "delayed"
+                            ? "border-l-status-delayed"
+                            : "border-l-status-complete"
+                        } hover:bg-muted/10 transition-colors rounded-md shadow-sm`}
+                      >
+                        <div className="flex items-start">
+                          {task.status === "delayed" ? (
+                            <AlertTriangle className="h-3.5 w-3.5 text-status-delayed mr-2 mt-0.5" />
+                          ) : (
+                            <CheckCircle2 className="h-3.5 w-3.5 text-status-complete mr-2 mt-0.5" />
+                          )}
+
+                          <div className="flex-1 space-y-1">
+                            {/* Title and Status Label */}
+                            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
+                              <AlertTitle className="text-sm font-medium">
+                                {task.title}
+                              </AlertTitle>
+                              <span
+                                className={`text-xs rounded-full px-2 py-0.5 mt-1 sm:mt-0 w-max ${
+                                  task.status === "delayed"
+                                    ? "bg-status-delayed/10 text-status-delayed"
+                                    : "bg-status-complete/10 text-status-complete"
+                                }`}
+                              >
+                                {task.status === "delayed"
+                                  ? "Delayed"
+                                  : "Early Completion"}
+                              </span>
+                            </div>
+
+                            {/* Project & Assignee */}
+                            <div className="flex flex-col sm:flex-row sm:items-center text-muted-foreground text-xs mt-0.5">
+                              <div className="flex items-center mb-1 sm:mb-0">
+                                <Calendar className="h-3 w-3 mr-1" />
+                                {task.projectName}
+                              </div>
+                              <span className="hidden sm:inline mx-2">•</span>
+                              <div className="flex items-center">
+                                <User className="h-3 w-3 mr-1" />
+                                {task.assigneeName}
+                              </div>
+                            </div>
+
+                            {/* Status & Time */}
+                            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center text-xs mt-0.5">
+                              <span className="text-muted-foreground">
+                                {task.status === "delayed"
+                                  ? "Taking longer than estimated"
+                                  : "Completed ahead of schedule"}
+                              </span>
+                              <span className="font-medium">
+                                {formatTimeHoursMinutes(task.timeSpent)} /{" "}
+                                {formatTimeHoursMinutes(task.estimatedTime)}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </Alert>
+                    ))}
+
+                    {taskHighlights.length === 0 && (
+                      <div className="text-center py-3 text-muted-foreground text-sm">
+                        No task highlights to display
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          )}
+          
+          {activeView === "projects" && (
+            <div className="space-y-5 animate-fade-in">
+              <Card className="overflow-hidden">
+                <CardHeader className="bg-muted/10 pb-3">
+                  <CardTitle className="text-sm font-medium">Project Progress</CardTitle>
+                  <CardDescription className="text-xs">
+                    Overall completion status of active projects
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="pt-4">
+                  <div className="space-y-4">
+                    {projectProgress.map((project) => (
+                      <div
+                        key={project.id}
+                        className="space-y-2 p-3 rounded-lg border hover:bg-muted/5 transition-colors"
+                      >
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <p className="text-sm font-medium">{project.name}</p>
+                            <p className="text-xs text-muted-foreground mt-0.5">
+                              {project.completedTasks} of {project.totalTasks} tasks
+                              completed
+                            </p>
+                          </div>
+                          <div className="flex items-center">
+                            <div
+                              className={`w-10 h-10 rounded-full flex items-center justify-center mr-3 ${
+                                project.progress === 100
+                                  ? "bg-status-complete/10"
+                                  : project.progress >= 50
+                                  ? "bg-status-inprogress/10"
+                                  : "bg-muted/20"
+                              }`}
+                            >
+                              <span
+                                className={`text-xs font-medium ${
+                                  project.progress === 100
+                                    ? "text-status-complete"
+                                    : project.progress >= 50
+                                    ? "text-status-inprogress"
+                                    : "text-muted-foreground"
+                                }`}
+                              >
+                                {project.progress}%
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <Progress
+                          value={project.progress}
+                          className={`${
+                            project.progress === 100
+                              ? "bg-status-complete/20"
+                              : project.progress >= 50
+                              ? "bg-status-inprogress/20"
+                              : "bg-muted/30"
+                          }`}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          )}
+          
+          {activeView === "team" && (
+            <div className="animate-fade-in">
+              <TeamPerformanceDashboard />
+            </div>
+          )}
+          
+          {activeView === "resource" && (
+            <div className="animate-fade-in">
+              <ResourceDashboard />
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

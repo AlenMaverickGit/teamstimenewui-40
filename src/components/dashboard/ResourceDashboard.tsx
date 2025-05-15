@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Download, UsersRound, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -11,6 +12,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 type ResourceAllocation = {
   project: string;
@@ -155,118 +157,120 @@ const ResourceDashboard: React.FC = () => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-2xl shadow-md">
-      <div className="flex items-center justify-between mb-4 flex-nowrap">
-        <h2 className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold text-gray-800 flex items-center truncate">
-          <UsersRound className="mr-2 h-5 w-5 text-primary shrink-0" />
-          Project-Wise Resource Allocation
-        </h2>
-        <Button
-          className="ml-4 shadow-neon transition-all hover:translate-y-[-2px] px-3 sm:px-4 py-2 whitespace-nowrap"
-          onClick={generateResourceReport}
-        >
-          <Download className="h-4 w-4 mr-0 sm:mr-2" />
-          <span className="hidden sm:inline">Export</span>
-        </Button>
-      </div>
-
-      {/* Desktop Table */}
-      <div className="rounded-xl border border-gray-200 hidden md:block overflow-hidden">
-        <div className="h-[500px] relative">
-          <Table className="w-full table-fixed text-sm text-left">
-            <TableHeader className="sticky top-[72px] bg-card z-10 shadow-sm">
-              <TableRow>
-                <TableHead className="bg-card px-4 py-3">Project</TableHead>
-                <TableHead className="bg-card px-4 py-3">Employee Name</TableHead>
-                <TableHead className="bg-card px-4 py-3">Role</TableHead>
-                <TableHead className="bg-card px-4 py-3">Start Date</TableHead>
-                <TableHead className="bg-card px-4 py-3">End Date</TableHead>
-                <TableHead className="bg-card px-4 py-3">Rate ($)</TableHead>
-                <TableHead className="bg-card px-4 py-3">Cost ($)</TableHead>
-              </TableRow>
-            </TableHeader>
-          </Table>
-          <ScrollArea className="h-[428px] w-full">
-            <Table className="w-full table-fixed text-sm text-left">
-              <TableBody>
-                {mockData.map((entry, index) => (
-                  <TableRow key={index}>
-                    <TableCell className="px-4 py-3">{entry.project}</TableCell>
-                    <TableCell className="px-4 py-3">{entry.employeeName}</TableCell>
-                    <TableCell className="px-4 py-3">{entry.role}</TableCell>
-                    <TableCell className="px-4 py-3">{entry.startDate}</TableCell>
-                    <TableCell className="px-4 py-3">{entry.endDate}</TableCell>
-                    <TableCell className="px-4 py-3">{entry.rate.toFixed(2)}</TableCell>
-                    <TableCell className="px-4 py-3">{entry.cost.toFixed(2)}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </ScrollArea>
+    <Card className="shadow-sm overflow-hidden">
+      <CardHeader className="bg-muted/10 pb-3">
+        <div className="flex items-center justify-between">
+          <CardTitle className="text-sm font-medium flex items-center">
+            <UsersRound className="mr-2 h-4 w-4 text-primary" />
+            Project-Wise Resource Allocation
+          </CardTitle>
+          <Button
+            variant="outline"
+            size="sm"
+            className="text-xs shadow-sm"
+            onClick={generateResourceReport}
+          >
+            <Download className="h-3 w-3 mr-1" />
+            <span className="hidden sm:inline">Export</span>
+          </Button>
         </div>
-      </div>
-
-      {/* Mobile Accordion Grouped by Project */}
-      <div className="block md:hidden space-y-4 mt-4">
-        {projectList.map(([project, employees], idx) => (
-          <div key={project} className="border rounded-xl shadow-sm transition">
-            <button
-              className="w-full flex justify-between items-center px-4 py-3 text-left font-semibold text-gray-800 bg-[#f6f7ff] rounded-t-xl"
-              onClick={() => toggleAccordion(idx)}
-            >
-              <span className="truncate">{project}</span>
-              <span>{openIndex === idx ? "−" : "+"}</span>
-            </button>
-            {openIndex === idx && (
-              <div className="p-2 animate-fade-in space-y-3 bg-white rounded-b-xl">
-                {employees.map((entry, eIdx) => (
-                  <div
-                    key={eIdx}
-                    className="rounded-lg bg-gradient-to-br from-purple-100/80 to-white/90 border border-purple-200/60 shadow-md p-3 flex flex-col gap-2"
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="inline-block rounded-full bg-primary/10 p-2">
-                        <UsersRound className="w-5 h-5 text-primary" />
-                      </span>
-                      <div>
-                        <p className="font-semibold text-gray-900 text-base">{entry.employeeName}</p>
-                        <p className="text-xs text-muted-foreground font-medium">{entry.role}</p>
-                      </div>
-                    </div>
-                    <div className="flex flex-col sm:flex-row gap-1 text-xs text-muted-foreground">
-                      <span className="font-medium">
-                        Start: <span className="ml-1 text-gray-700">{entry.startDate}</span>
-                      </span>
-                      <span className="font-medium">
-                        End: <span className="ml-1 text-gray-700">{entry.endDate}</span>
-                      </span>
-                    </div>
-                    <div className="flex flex-wrap gap-2 mt-2">
-                      <div className="flex-1 flex items-center min-w-[120px]">
-                        <span className="inline-block px-2 py-1 bg-blue-100 text-blue-700 font-bold text-xs rounded-lg mr-2">
-                          Rate
-                        </span>
-                        <span className="font-mono text-base text-blue-800">
-                          ${entry.rate.toFixed(2)}
-                        </span>
-                      </div>
-                      <div className="flex-1 flex items-center min-w-[120px]">
-                        <span className="inline-block px-2 py-1 bg-green-100 text-green-700 font-bold text-xs rounded-lg mr-2">
-                          Cost
-                        </span>
-                        <span className="font-mono text-base text-green-800">
-                          ${entry.cost.toFixed(2)}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
+      </CardHeader>
+      <CardContent className="p-0">
+        {/* Desktop Table */}
+        <div className="hidden md:block">
+          <div className="h-[460px] relative">
+            <Table className="w-full table-fixed text-sm text-left border-separate border-spacing-0">
+              <TableHeader className="sticky top-0 z-10 border-b">
+                <TableRow className="bg-muted/10">
+                  <TableHead className="px-3 py-2 text-xs font-medium text-muted-foreground">Project</TableHead>
+                  <TableHead className="px-3 py-2 text-xs font-medium text-muted-foreground">Employee Name</TableHead>
+                  <TableHead className="px-3 py-2 text-xs font-medium text-muted-foreground">Role</TableHead>
+                  <TableHead className="px-3 py-2 text-xs font-medium text-muted-foreground">Start Date</TableHead>
+                  <TableHead className="px-3 py-2 text-xs font-medium text-muted-foreground">End Date</TableHead>
+                  <TableHead className="px-3 py-2 text-xs font-medium text-muted-foreground">Rate ($)</TableHead>
+                  <TableHead className="px-3 py-2 text-xs font-medium text-muted-foreground">Cost ($)</TableHead>
+                </TableRow>
+              </TableHeader>
+            </Table>
+            <ScrollArea className="h-[428px] w-full">
+              <Table className="w-full table-fixed text-sm text-left">
+                <TableBody>
+                  {mockData.map((entry, index) => (
+                    <TableRow key={index} className="hover:bg-muted/5 transition-colors">
+                      <TableCell className="px-3 py-2 text-xs">{entry.project}</TableCell>
+                      <TableCell className="px-3 py-2 text-xs">{entry.employeeName}</TableCell>
+                      <TableCell className="px-3 py-2 text-xs">{entry.role}</TableCell>
+                      <TableCell className="px-3 py-2 text-xs">{entry.startDate}</TableCell>
+                      <TableCell className="px-3 py-2 text-xs">{entry.endDate}</TableCell>
+                      <TableCell className="px-3 py-2 text-xs font-mono">{entry.rate.toFixed(2)}</TableCell>
+                      <TableCell className="px-3 py-2 text-xs font-mono">{entry.cost.toFixed(2)}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </ScrollArea>
           </div>
-        ))}
-      </div>
-    </div>
+        </div>
+
+        {/* Mobile Accordion Grouped by Project */}
+        <div className="block md:hidden p-3 space-y-2">
+          {projectList.map(([project, employees], idx) => (
+            <div key={project} className="border rounded-lg shadow-sm transition-all">
+              <button
+                className="w-full flex justify-between items-center px-3 py-2 text-left text-xs font-medium text-foreground bg-muted/10 rounded-t-lg"
+                onClick={() => toggleAccordion(idx)}
+              >
+                <span className="truncate">{project}</span>
+                <span className="text-xs">{openIndex === idx ? "−" : "+"}</span>
+              </button>
+              {openIndex === idx && (
+                <div className="p-2 animate-fade-in space-y-2 bg-card rounded-b-lg">
+                  {employees.map((entry, eIdx) => (
+                    <div
+                      key={eIdx}
+                      className="rounded-md bg-muted/5 border border-border/30 shadow-sm p-2 flex flex-col gap-1"
+                    >
+                      <div className="flex items-center gap-2">
+                        <span className="inline-block rounded-full bg-primary/10 p-1.5">
+                          <User className="w-3 h-3 text-primary" />
+                        </span>
+                        <div>
+                          <p className="font-medium text-xs">{entry.employeeName}</p>
+                          <p className="text-[10px] text-muted-foreground">{entry.role}</p>
+                        </div>
+                      </div>
+                      <div className="flex flex-col sm:flex-row gap-1 text-[10px] text-muted-foreground mt-1">
+                        <span className="font-medium">
+                          {entry.startDate} - {entry.endDate}
+                        </span>
+                      </div>
+                      <div className="flex flex-wrap gap-1 mt-1">
+                        <div className="flex-1 flex items-center min-w-[100px] text-[10px]">
+                          <span className="inline-block px-1.5 py-0.5 bg-blue-100 text-blue-700 font-medium rounded-sm mr-1">
+                            Rate
+                          </span>
+                          <span className="font-mono text-xs text-blue-800">
+                            ${entry.rate.toFixed(2)}
+                          </span>
+                        </div>
+                        <div className="flex-1 flex items-center min-w-[100px] text-[10px]">
+                          <span className="inline-block px-1.5 py-0.5 bg-green-100 text-green-700 font-medium rounded-sm mr-1">
+                            Cost
+                          </span>
+                          <span className="font-mono text-xs text-green-800">
+                            ${entry.cost.toFixed(2)}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 

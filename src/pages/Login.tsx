@@ -3,14 +3,16 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Check, Eye, EyeOff, LockKeyhole, User } from "lucide-react";
+import { Check, LogIn, Clock } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const Login: React.FC = () => {
-  const [employeeId, setEmployeeId] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   
@@ -43,10 +45,9 @@ const Login: React.FC = () => {
     setIsLoading(true);
     
     try {
-      // As requested, no actual validation, just simulate API call with delay
+      // As requested, always navigate to dashboard without actual validation
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Always store a dummy token and redirect
       localStorage.setItem("access_token", "dummy_token");
       navigate("/dashboard");
     } catch (error) {
@@ -56,15 +57,11 @@ const Login: React.FC = () => {
     }
   };
 
-  const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-[#1a4d7c] via-[#2980B9] to-[#3498DB] flex flex-col items-center justify-center px-4 py-8">
       {/* Success Message */}
       {showSuccessMessage && (
-        <div className="fixed top-4 right-4 left-4 md:left-auto bg-green-50 border border-green-200 text-green-800 rounded-lg px-4 py-3 flex items-center shadow-lg animate-fade-in z-50 max-w-md">
+        <div className="fixed top-4 right-4 left-4 md:left-auto md:right-4 md:top-4 bg-green-50 border border-green-200 text-green-800 rounded-lg px-4 py-3 flex items-center justify-between shadow-lg animate-fade-in z-50 max-w-md">
           <div className="flex items-center">
             <div className="mr-2 bg-green-100 rounded-full p-1">
               <Check size={18} className="text-green-600" />
@@ -74,116 +71,115 @@ const Login: React.FC = () => {
         </div>
       )}
 
-      <div className="w-full max-w-md">
-        {/* Logo and App Name */}
-        <div className="mb-8 flex items-center justify-center">
-          <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center shadow-lg mr-3">
-            <span className="text-white font-bold text-xl">TT</span>
+      <div className="w-full max-w-md text-center mb-8">
+        {/* App Logo */}
+        <div className="mx-auto w-20 h-20 mb-6 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center">
+          <div className="w-12 h-12 bg-white/90 rounded-xl flex items-center justify-center">
+            <Clock className="h-8 w-8 text-[#3498DB]" />
           </div>
-          <h1 className="text-foreground text-3xl md:text-4xl font-bold">
-            <span className="text-primary">Teams</span>Time
-          </h1>
+        </div>
+        
+        {/* Title */}
+        <h1 className="text-white text-2xl font-semibold mb-2">
+          Welcome to TeamsTime
+        </h1>
+        <p className="text-white/80 text-sm">
+          Sign in to access your dashboard
+        </p>
+      </div>
+
+      {/* Login Form */}
+      <div className="w-full max-w-md">
+        <div className="backdrop-blur-xl bg-white/10 rounded-xl overflow-hidden border border-white/20 p-1">
+          <form onSubmit={handleLogin} className="space-y-4 p-4">
+            <div className="space-y-3">
+              <Input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email address"
+                className="bg-white/10 border-white/10 text-white placeholder:text-white/60 h-12"
+                autoComplete="email"
+              />
+              
+              <Input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
+                className="bg-white/10 border-white/10 text-white placeholder:text-white/60 h-12"
+                autoComplete="current-password"
+              />
+            </div>
+
+            <div className="flex items-center justify-between pt-1">
+              <div className="flex items-center space-x-2">
+                <Checkbox 
+                  id="remember-me" 
+                  checked={rememberMe}
+                  onCheckedChange={(checked) => setRememberMe(checked === true)}
+                  className="data-[state=checked]:bg-white data-[state=checked]:text-[#3498DB] border-white"
+                />
+                <Label htmlFor="remember-me" className="text-sm font-normal text-white">
+                  Remember me
+                </Label>
+              </div>
+              
+              <a 
+                href="#" 
+                className="text-sm text-white hover:underline"
+                onClick={(e) => {
+                  e.preventDefault();
+                  // Handle forgot password
+                }}
+              >
+                Forgot Password
+              </a>
+            </div>
+
+            <Button
+              type="submit"
+              className="w-full h-12 bg-white hover:bg-white/90 text-[#3498DB] font-medium shadow-md"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <span className="flex items-center justify-center">
+                  <span className="w-4 h-4 border-2 border-[#3498DB] border-t-transparent rounded-full animate-spin mr-2"></span>
+                  Signing In...
+                </span>
+              ) : (
+                <>
+                  <LogIn className="mr-2 h-4 w-4" />
+                  Login
+                </>
+              )}
+            </Button>
+          </form>
         </div>
 
-        {/* Login Card */}
-        <Card className="shadow-xl border-0">
-          <CardHeader className="space-y-1 pb-6">
-            <CardTitle className="text-2xl font-bold text-center">Welcome Back</CardTitle>
-            <CardDescription className="text-center">
-              Enter your credentials to access your account
-            </CardDescription>
-          </CardHeader>
+        {/* Divider */}
+        <div className="flex items-center justify-center my-6">
+          <div className="border-t border-white/20 flex-grow"></div>
+          <span className="px-4 text-white/60 text-sm">or</span>
+          <div className="border-t border-white/20 flex-grow"></div>
+        </div>
 
-          <form onSubmit={handleLogin}>
-            <CardContent className="space-y-6">
-              <div className="space-y-2">
-                <label className="text-sm font-medium" htmlFor="employeeId">
-                  Employee ID
-                </label>
-                <div className="relative">
-                  <span className="absolute left-3 top-2.5 text-muted-foreground">
-                    <User size={18} />
-                  </span>
-                  <Input
-                    id="employeeId"
-                    type="text"
-                    value={employeeId}
-                    onChange={(e) => setEmployeeId(e.target.value)}
-                    placeholder="EMP202301"
-                    className="pl-10"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <label className="text-sm font-medium" htmlFor="password">
-                    Password
-                  </label>
-                  <a href="#" className="text-sm font-medium text-primary hover:text-primary/80 hover:underline">
-                    Forgot password?
-                  </a>
-                </div>
-                <div className="relative">
-                  <span className="absolute left-3 top-2.5 text-muted-foreground">
-                    <LockKeyhole size={18} />
-                  </span>
-                  <Input
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="••••••••"
-                    className="pl-10 pr-10"
-                    required
-                  />
-                  <button 
-                    type="button" 
-                    onClick={toggleShowPassword} 
-                    className="absolute right-3 top-2.5 text-muted-foreground hover:text-foreground"
-                  >
-                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                  </button>
-                </div>
-              </div>
-            </CardContent>
-
-            <CardFooter className="flex flex-col space-y-4 pt-2 pb-6">
-              <Button
-                type="submit"
-                className="w-full py-5 text-base font-medium shadow-sm"
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <span className="flex items-center justify-center">
-                    <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></span>
-                    Signing In...
-                  </span>
-                ) : (
-                  "Sign In"
-                )}
-              </Button>
-              <p className="text-sm text-muted-foreground text-center">
-                Don't have an account?{" "}
-                <a 
-                  href="/register" 
-                  className="text-primary font-medium hover:underline"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    navigate("/register");
-                  }}
-                >
-                  Create Account
-                </a>
-              </p>
-            </CardFooter>
-          </form>
-        </Card>
-        
-        <p className="text-xs text-center text-muted-foreground mt-8">
-          © 2025 TeamsTime. All rights reserved.
-        </p>
+        {/* Sign Up Link */}
+        <div className="text-center">
+          <p className="text-white/80">
+            Don't have an account?{" "}
+            <a 
+              href="/register" 
+              className="text-white hover:underline font-medium"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("/register");
+              }}
+            >
+              Sign Up
+            </a>
+          </p>
+        </div>
       </div>
     </div>
   );

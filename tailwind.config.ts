@@ -19,6 +19,18 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				sans: ['Plus Jakarta Sans', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+			},
+			fontSize: {
+				'xs': ['0.75rem', { lineHeight: '1.125rem', letterSpacing: '-0.01em' }],
+				'sm': ['0.875rem', { lineHeight: '1.25rem', letterSpacing: '-0.01em' }],
+				'base': ['1rem', { lineHeight: '1.5rem', letterSpacing: '-0.0125em' }],
+				'lg': ['1.125rem', { lineHeight: '1.75rem', letterSpacing: '-0.015em' }],
+				'xl': ['1.25rem', { lineHeight: '1.875rem', letterSpacing: '-0.02em' }],
+				'2xl': ['1.5rem', { lineHeight: '2rem', letterSpacing: '-0.025em' }],
+				'3xl': ['1.875rem', { lineHeight: '2.375rem', letterSpacing: '-0.03em' }],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -64,10 +76,10 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				status: {
-					delayed: '#FF5757',
-					complete: '#4CAF50',
+					delayed: '#F43F5E',
+					complete: '#10B981',
 					inprogress: '#3B82F6',
-					notstarted: '#9CA3AF'
+					notstarted: '#94A3B8'
 				}
 			},
 			borderRadius: {
@@ -93,9 +105,15 @@ export default {
 					}
 				},
 				'fade-in': {
-					from: { opacity: '0', transform: 'translateY(10px)' },
-					to: { opacity: '1', transform: 'translateY(0)' }
-				}
+					from: { 
+						opacity: '0',
+						transform: 'translateY(10px)'
+					},
+					to: { 
+						opacity: '1',
+						transform: 'translateY(0)'
+					},
+				},
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
@@ -103,10 +121,14 @@ export default {
 				'fade-in': 'fade-in 0.3s ease-out'
 			},
 			boxShadow: {
-				'card': '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08)',
-				'card-hover': '0 4px 8px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.06)',
-				'nav': '0 2px 4px rgba(0,0,0,0.08)',
-				'sidebar': '0 0 20px rgba(0,0,0,0.08)'
+				'sm': '0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02)',
+				'DEFAULT': '0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05)',
+				'md': '0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -2px rgba(0, 0, 0, 0.04)',
+				'lg': '0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -4px rgba(0, 0, 0, 0.04)',
+				'xl': '0 20px 25px -5px rgba(0, 0, 0, 0.04), 0 8px 10px -6px rgba(0, 0, 0, 0.04)',
+				'card': '0 4px 12px rgba(0, 0, 0, 0.04), 0 2px 6px rgba(0, 0, 0, 0.03)',
+				'dropdown': '0 4px 20px rgba(0, 0, 0, 0.08)',
+				'none': 'none'
 			}
 		}
 	},

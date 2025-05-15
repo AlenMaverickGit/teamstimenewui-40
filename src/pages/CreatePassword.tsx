@@ -5,9 +5,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
-import { Eye, EyeOff, Check, X, LockKeyhole } from "lucide-react";
+import { Eye, EyeOff, Check } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 
 type PasswordFormData = {
   password: string;
@@ -83,140 +83,125 @@ const CreatePassword: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#1A1F2C] via-[#2A2F3C] to-[#3A3F4C] flex flex-col items-center justify-center px-4 py-8">
-      {/* Logo and App Name */}
-      <div className="mb-8 flex items-center">
-        <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center shadow-xl mr-3">
-          <span className="text-white font-bold text-xl">TT</span>
-        </div>
-        <h1 className="text-white text-3xl md:text-4xl font-bold">
-          <span className="text-primary">Teams</span>Time
-        </h1>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-[#3498DB] via-[#2980B9] to-[#1F618D] flex flex-col items-center justify-center px-4 py-8">
+      <h1 className="text-white text-3xl md:text-4xl font-bold mb-6 drop-shadow-md">
+        Create <span className="text-white/90 font-extrabold">Password</span>
+      </h1>
 
-      <Card className="w-full max-w-md shadow-2xl border-0 bg-card/95 backdrop-blur-sm">
-        <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold text-center">Create Password</CardTitle>
-          <CardDescription className="text-center">
-            Set a secure password for your account
-          </CardDescription>
-        </CardHeader>
-
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="password" className="text-sm font-medium">Password</Label>
-              <div className="relative">
-                <span className="absolute left-3 top-2.5 text-muted-foreground">
-                  <LockKeyhole size={18} />
-                </span>
-                <Input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  className="pl-10 pr-10"
-                  {...register("password", { 
-                    required: "Password is required",
-                  })}
-                />
-                <button 
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-2.5 text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                </button>
-              </div>
-              {errors.password && (
-                <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
-              )}
-              
-              <div className="mt-3 p-4 bg-muted/10 rounded-lg border border-border/50">
-                <div className="text-xs font-medium mb-2">Password requirements:</div>
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                  <PasswordRequirement met={hasMinLength}>
-                    At least 8 characters
-                  </PasswordRequirement>
-                  <PasswordRequirement met={hasUppercase}>
-                    One uppercase letter
-                  </PasswordRequirement>
-                  <PasswordRequirement met={hasLowercase}>
-                    One lowercase letter
-                  </PasswordRequirement>
-                  <PasswordRequirement met={hasNumber}>
-                    One number
-                  </PasswordRequirement>
-                  <PasswordRequirement met={hasSpecialChar}>
-                    One special character
-                  </PasswordRequirement>
-                </ul>
-              </div>
+      <div className="w-full max-w-md">
+        <Card className="backdrop-blur-md bg-white/90 border-0 shadow-xl rounded-2xl transition-all duration-300">
+          <div className="h-1 bg-[#3498DB]"></div>
+          <CardContent className="p-8">
+            <div className="text-center mb-6">
+              <h2 className="text-2xl font-bold text-gray-800 mb-1">Set Your Password</h2>
+              <p className="text-muted-foreground">
+                Create a secure password for your account
+              </p>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="confirmPassword" className="text-sm font-medium">Confirm Password</Label>
-              <div className="relative">
-                <span className="absolute left-3 top-2.5 text-muted-foreground">
-                  <LockKeyhole size={18} />
-                </span>
-                <Input
-                  id="confirmPassword"
-                  type={showConfirmPassword ? "text" : "password"}
-                  className="pl-10 pr-10"
-                  {...register("confirmPassword", { 
-                    required: "Please confirm your password",
-                    validate: value => value === password || "Passwords do not match"
-                  })}
-                />
-                <button 
-                  type="button"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-3 top-2.5 text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                </button>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+              <div className="space-y-2">
+                <Label htmlFor="password" className="text-sm font-medium text-gray-700">Password</Label>
+                <div className="relative">
+                  <Input
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    className="h-11 bg-white/50 border border-gray-200 focus-visible:border-[#3498DB] focus-visible:ring-1 focus-visible:ring-[#3498DB] shadow-sm pr-10"
+                    {...register("password", { 
+                      required: "Password is required",
+                      minLength: {
+                        value: 8,
+                        message: "Password must be at least 8 characters"
+                      }
+                    })}
+                    placeholder="Create a secure password"
+                  />
+                  <button 
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-3 text-gray-500 hover:text-gray-700 transition-colors focus:outline-none"
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
+                {errors.password && (
+                  <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
+                )}
+                
+                <div className="mt-3 p-4 bg-gray-50 rounded-lg border border-gray-100">
+                  <div className="text-xs font-medium text-gray-700 mb-2">Password requirements:</div>
+                  <ul className="space-y-1 pl-1">
+                    <PasswordRequirement met={hasMinLength} text="At least 8 characters" />
+                    <PasswordRequirement met={hasUppercase} text="One uppercase letter" />
+                    <PasswordRequirement met={hasLowercase} text="One lowercase letter" />
+                    <PasswordRequirement met={hasNumber} text="One number" />
+                    <PasswordRequirement met={hasSpecialChar} text="One special character" />
+                  </ul>
+                </div>
               </div>
-              {errors.confirmPassword && (
-                <p className="text-red-500 text-xs mt-1">{errors.confirmPassword.message}</p>
-              )}
-            </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="confirmPassword" className="text-sm font-medium text-gray-700">Confirm Password</Label>
+                <div className="relative">
+                  <Input
+                    id="confirmPassword"
+                    type={showConfirmPassword ? "text" : "password"}
+                    className="h-11 bg-white/50 border border-gray-200 focus-visible:border-[#3498DB] focus-visible:ring-1 focus-visible:ring-[#3498DB] shadow-sm pr-10"
+                    {...register("confirmPassword", { 
+                      required: "Please confirm your password",
+                      validate: value => value === password || "Passwords do not match"
+                    })}
+                    placeholder="Confirm your password"
+                  />
+                  <button 
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute right-3 top-3 text-gray-500 hover:text-gray-700 transition-colors focus:outline-none"
+                  >
+                    {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
+                {errors.confirmPassword && (
+                  <p className="text-red-500 text-xs mt-1">{errors.confirmPassword.message}</p>
+                )}
+              </div>
+
+              <Button 
+                type="submit" 
+                className="w-full h-11 bg-[#3498DB] hover:bg-[#2980B9] shadow-md text-white font-medium"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <span className="flex items-center justify-center">
+                    <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></span>
+                    Creating Account...
+                  </span>
+                ) : (
+                  "Create Account"
+                )}
+              </Button>
+            </form>
           </CardContent>
-
-          <CardFooter>
-            <Button 
-              type="submit" 
-              className="w-full py-2 bg-primary hover:bg-primary/90"
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <span className="flex items-center justify-center">
-                  <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></span>
-                  Creating Account...
-                </span>
-              ) : (
-                "Create Account"
-              )}
-            </Button>
-          </CardFooter>
-        </form>
-      </Card>
+        </Card>
+      </div>
     </div>
   );
 };
 
 interface PasswordRequirementProps {
   met: boolean;
-  children: React.ReactNode;
+  text: string;
 }
 
-const PasswordRequirement: React.FC<PasswordRequirementProps> = ({ met, children }) => (
-  <li className="flex items-center gap-1.5">
-    {met ? (
-      <Check size={14} className="text-green-500" />
-    ) : (
-      <X size={14} className="text-muted-foreground" />
-    )}
-    <span className={met ? "text-green-600 dark:text-green-400" : ""}>
-      {children}
+const PasswordRequirement: React.FC<PasswordRequirementProps> = ({ met, text }) => (
+  <li className="flex items-center gap-1.5 text-xs">
+    <span className={`flex items-center justify-center w-4 h-4 rounded-full transition-colors ${
+      met ? "bg-green-100 text-green-600" : "bg-gray-200 text-gray-400"
+    }`}>
+      {met ? <Check size={10} /> : ""}
+    </span>
+    <span className={met ? "text-gray-700 font-medium" : "text-gray-500"}>
+      {text}
     </span>
   </li>
 );

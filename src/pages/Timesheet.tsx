@@ -15,28 +15,57 @@ import { useIsMobile } from "@/hooks/use-mobile";
 const Timesheet: React.FC = () => {
   const isMobile = useIsMobile();
   return (
-    <div className="container px-2 sm:px-6 py-6 animate-fade-in">
-      <BreadcrumbNav />
-      <div className="flex flex-col gap-6">
-        <div className="flex items-center justify-between flex-wrap gap-2">
-          <h1 className="font-bold text-gradient text-xl sm:text-2xl md:text-3xl lg:text-4xl">
-            Timesheet
-          </h1>
-          <div className="text-sm text-muted-foreground px-4 py-2 rounded-full bg-card/50 backdrop-blur-sm border border-border/50 flex items-center gap-2">
-            <CalendarClock className="h-4 w-4" />
-            <span>Week: {getWeekRangeText()}</span>
-          </div>
-        </div>
+    // <div className="container px-2 sm:px-4 py-4 animate-fade-in">
+    //   <BreadcrumbNav />
+    //   <div className="flex flex-col gap-4">
+    //     <div className="flex items-center justify-between flex-wrap gap-2">
+    //       <h1 className="font-bold text-gradient text-xl sm:text-2xl md:text-3xl">
+    //         Timesheet
+    //       </h1>
+    //       <div className="text-xs text-muted-foreground px-3 py-1.5 rounded-full bg-card/50 backdrop-blur-sm border border-border/50 flex items-center gap-1.5">
+    //         <CalendarClock className="h-3.5 w-3.5" />
+    //         <span>Week: {getWeekRangeText()}</span>
+    //       </div>
+    //     </div>
 
-        <Card className="px-2 py-4 sm:px-4 sm:py-6">
-          <CardHeader className="px-2 sm:px-4">
-            <CardTitle>Time Tracking</CardTitle>
-            <CardDescription>
+    //     <Card className="border-border/40 shadow-sm">
+    //       <CardHeader className="px-4 py-3">
+    //         <CardTitle className="text-base font-medium">
+    //           Time Tracking
+    //         </CardTitle>
+    //         <CardDescription className="text-xs">
+    //           Record time spent on your assigned tasks and projects. Compare
+    //           actual time against planned estimates.
+    //         </CardDescription>
+    //       </CardHeader>
+    //       <CardContent className="px-3 py-3 sm:px-4">
+    //         {isMobile ? <MobileTimesheetForm /> : <TimesheetForm />}
+    //       </CardContent>
+    //     </Card>
+    //   </div>
+    // </div>
+
+    <div className="container px-2 sm:px-4 py-4 animate-fade-in">
+      <div className="flex items-center justify-between flex-wrap gap-4 mb-4">
+        <BreadcrumbNav />
+        <div className="text-xs text-muted-foreground px-3 py-1 rounded-full bg-card/50 backdrop-blur-sm border border-border/50 flex items-center gap-1.5 h-8">
+          <CalendarClock className="h-3.5 w-3.5" />
+          <span>Week: {getWeekRangeText()}</span>
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-4">
+        <Card className="border-border/40 shadow-sm">
+          <CardHeader className="px-4 py-3">
+            <CardTitle className="text-base font-medium">
+              Time Tracking
+            </CardTitle>
+            <CardDescription className="text-xs">
               Record time spent on your assigned tasks and projects. Compare
               actual time against planned estimates.
             </CardDescription>
           </CardHeader>
-          <CardContent className="px-2 sm:px-4">
+          <CardContent className="px-3 py-3 sm:px-4">
             {isMobile ? <MobileTimesheetForm /> : <TimesheetForm />}
           </CardContent>
         </Card>

@@ -13,7 +13,14 @@ const ProjectDetailsPage: React.FC = () => {
     <div className="container py-6 animate-fade-in">
       <BreadcrumbNav projectName={project?.name} />
       <div className="flex flex-col gap-6">
-        <h1 className="text-3xl font-bold text-gradient">{project?.name}</h1>
+        <div className="flex items-center justify-between flex-wrap gap-2">
+          <h1 className="text-2xl md:text-3xl font-bold text-gradient block md:hidden">
+            {project?.name}
+          </h1>
+          <p className="text-xs text-muted-foreground px-3 py-1.5 rounded-full bg-card/50 backdrop-blur-sm border border-border/50 tracking-tight ml-auto">
+            Last updated: {new Date().toLocaleDateString()}
+          </p>
+        </div>
         <ProjectDetails />
       </div>
     </div>
