@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -24,11 +23,11 @@ const queryClient = new QueryClient();
 const AuthenticatedRoute = ({ children }: { children: React.ReactNode }) => {
   // Check if user is authenticated
   const isAuthenticated = localStorage.getItem("access_token");
-  
+
   if (!isAuthenticated) {
     return <Navigate to="/" replace />;
   }
-  
+
   return <>{children}</>;
 };
 
@@ -45,9 +44,13 @@ const App = () => {
               <Route path="/" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/verify-otp" element={<VerifyOTP />} />
-              <Route path="/invited-signup" element={<InvitedSignup />} />
+              {/* <Route path="/invited-signup" element={<InvitedSignup />} /> */}
+              <Route
+                path="/invited-signup/:inviteId"
+                element={<InvitedSignup />}
+              />
               <Route path="/verify-invite-otp" element={<VerifyInviteOTP />} />
-              
+
               {/* App Routes - With Header */}
               <Route
                 path="/dashboard"
@@ -127,7 +130,7 @@ const App = () => {
                   </AuthenticatedRoute>
                 }
               />
-              
+
               {/* Catch-all route */}
               <Route path="*" element={<NotFound />} />
             </Routes>
