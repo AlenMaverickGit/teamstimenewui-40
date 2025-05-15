@@ -430,6 +430,11 @@ export const getTasksByAssigneeId = (userId: string): Task[] => {
   return tasks.filter(task => task.assigneeId === userId);
 };
 
+// Add the missing getAllUsers function
+export const getAllUsers = (): User[] => {
+  return users;
+};
+
 // Add a function to get team statistics for dashboard
 export const getTeamStatistics = () => {
   const totalTasks = tasks.length;
