@@ -82,18 +82,7 @@ const InvitedSignup: React.FC = () => {
       <div className="w-full max-w-md">
         <div className="backdrop-blur-xl bg-white/10 rounded-xl overflow-hidden border border-white/20 p-1">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 p-4">
-            {/* Email (Readonly) */}
-            <div className="relative">
-              <Input
-                type="email"
-                value={email}
-                readOnly
-                className="bg-white/10 border-white/10 text-white placeholder:text-white/60 h-12 opacity-70"
-              />
-              <span className="absolute right-3 top-3 text-white/60">
-                <User className="h-5 w-5" />
-              </span>
-            </div>
+            {/* Removed the readonly email input field */}
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
