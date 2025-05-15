@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import BreadcrumbNav from "@/components/BreadcrumbNav";
 import { Button } from "@/components/ui/button";
@@ -18,6 +19,26 @@ import {
 import { UserPlus, MoreHorizontal } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { toast } from "@/components/ui/use-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
 
 interface User {
   id: string;
@@ -26,6 +47,13 @@ interface User {
   role: string;
   initials: string;
 }
+
+const inviteFormSchema = z.object({
+  email: z.string().email({ message: "Please enter a valid email address" }),
+  role: z.string({ required_error: "Please select a role" }),
+});
+
+type InviteFormValues = z.infer<typeof inviteFormSchema>;
 
 const UsersPage: React.FC = () => {
   const [users, setUsers] = useState<User[]>([
@@ -80,6 +108,27 @@ const UsersPage: React.FC = () => {
     },
   ]);
 
+  const [open, setOpen] = useState(false);
+
+  const form = useForm<InviteFormValues>({
+    resolver: zodResolver(inviteFormSchema),
+    defaultValues: {
+      email: "",
+      role: "",
+    },
+  });
+
+  const onSubmit = (data: InviteFormValues) => {
+    // In a real application, this would send the invitation
+    console.log("Invitation sent to:", data);
+    toast({
+      title: "Invitation sent",
+      description: `An invitation has been sent to ${data.email}`,
+    });
+    form.reset();
+    setOpen(false);
+  };
+
   const getRoleColor = (role: string) => {
     switch (role) {
       case "Admin":
@@ -110,26 +159,74 @@ const UsersPage: React.FC = () => {
   };
 
   return (
-    // <div className="px-2 sm:container sm:mx-auto py-6">
-    //   <BreadcrumbNav />
-    //   <div className="flex flex-col gap-6">
-    //     <div className="flex items-center justify-between flex-wrap gap-2">
-    //       <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
-    //         User Management
-    //       </h1>
-    //       <Button className="flex items-center gap-2">
-    //         <UserPlus className="h-4 w-4" />
-    //         Invite User
-    //       </Button>
-    //     </div>
-
     <div className="px-2 sm:container sm:mx-auto py-6">
       <div className="flex items-center justify-between flex-wrap gap-2 mb-6">
         <BreadcrumbNav />
-        <Button className="h-8 px-3 py-1.5 text-sm flex items-center gap-2">
-          <UserPlus className="h-4 w-4" />
-          Invite User
-        </Button>
+        <Dialog open={open} onOpenChange={setOpen}>
+          <DialogTrigger asChild>
+            <Button className="h-8 px-3 py-1.5 text-sm flex items-center gap-2">
+              <UserPlus className="h-4 w-4" />
+              Invite User
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="max-w-md">
+            <DialogHeader>
+              <DialogTitle>Invite a team member</DialogTitle>
+            </DialogHeader>
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 pt-2">
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <Input 
+                          placeholder="Enter email address" 
+                          {...field} 
+                          autoComplete="email"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="role"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Role</FormLabel>
+                      <Select 
+                        onValueChange={field.onChange} 
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select a role" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="Admin">Admin</SelectItem>
+                          <SelectItem value="Project Manager">Project Manager</SelectItem>
+                          <SelectItem value="Team Member">Team Member</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <div className="flex justify-end pt-2">
+                  <Button type="submit">
+                    <UserPlus className="h-4 w-4 mr-2" />
+                    Send Invitation
+                  </Button>
+                </div>
+              </form>
+            </Form>
+          </DialogContent>
+        </Dialog>
       </div>
       <div>
         <div className="bg-white rounded-lg shadow-sm border border-border/30">
