@@ -1,8 +1,7 @@
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Clock, Calendar, User, Building, Key } from "lucide-react";
-import { 
+import {
   Select,
   SelectContent,
   SelectItem,
@@ -27,8 +26,14 @@ type RegistrationFormData = {
 const Register: React.FC = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  
-  const { register, handleSubmit, formState: { errors }, setValue, watch } = useForm<RegistrationFormData>({
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+    watch,
+  } = useForm<RegistrationFormData>({
     defaultValues: {
       firstName: "",
       lastName: "",
@@ -37,7 +42,7 @@ const Register: React.FC = () => {
       dateOfBirth: "",
       password: "",
       organizationName: "",
-    }
+    },
   });
 
   const roles = [
@@ -53,13 +58,13 @@ const Register: React.FC = () => {
     try {
       // Here would be the API call to register user and send OTP
       console.log("Registration data:", data);
-      
+
       // Store user data in session storage for the next steps
       sessionStorage.setItem("registrationData", JSON.stringify(data));
-      
+
       // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
       // Navigate to OTP verification page
       navigate("/verify-otp");
     } catch (error) {
@@ -78,7 +83,7 @@ const Register: React.FC = () => {
             <Clock className="h-8 w-8 text-[#3498DB]" />
           </div>
         </div>
-        
+
         {/* Title */}
         <h1 className="text-white text-2xl font-semibold mb-2">
           Welcome to TeamsTime
@@ -97,29 +102,35 @@ const Register: React.FC = () => {
                 <Input
                   placeholder="First Name"
                   className="bg-white/10 border-white/10 text-white placeholder:text-white/60 h-12"
-                  {...register("firstName", { required: "First name is required" })}
+                  {...register("firstName", {
+                    required: "First name is required",
+                  })}
                 />
                 {errors.firstName && (
-                  <p className="text-red-300 text-xs mt-1">{errors.firstName.message}</p>
+                  <p className="text-red-300 text-xs mt-1">
+                    {errors.firstName.message}
+                  </p>
                 )}
               </div>
-              
+
               <div>
                 <Input
                   placeholder="Last Name"
                   className="bg-white/10 border-white/10 text-white placeholder:text-white/60 h-12"
-                  {...register("lastName", { required: "Last name is required" })}
+                  {...register("lastName", {
+                    required: "Last name is required",
+                  })}
                 />
                 {errors.lastName && (
-                  <p className="text-red-300 text-xs mt-1">{errors.lastName.message}</p>
+                  <p className="text-red-300 text-xs mt-1">
+                    {errors.lastName.message}
+                  </p>
                 )}
               </div>
             </div>
 
             <div>
-              <Select 
-                onValueChange={(value) => setValue("role", value)}
-              >
+              <Select onValueChange={(value) => setValue("role", value)}>
                 <SelectTrigger className="bg-white/10 border-white/10 text-white placeholder:text-white/60 h-12">
                   <SelectValue placeholder="Select your role" />
                 </SelectTrigger>
@@ -132,7 +143,9 @@ const Register: React.FC = () => {
                 </SelectContent>
               </Select>
               {errors.role && (
-                <p className="text-red-300 text-xs mt-1">{errors.role.message}</p>
+                <p className="text-red-300 text-xs mt-1">
+                  {errors.role.message}
+                </p>
               )}
             </div>
 
@@ -141,16 +154,18 @@ const Register: React.FC = () => {
                 type="email"
                 placeholder="Email Address"
                 className="bg-white/10 border-white/10 text-white placeholder:text-white/60 h-12"
-                {...register("email", { 
+                {...register("email", {
                   required: "Email is required",
                   pattern: {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: "Invalid email address"
-                  }
+                    message: "Invalid email address",
+                  },
                 })}
               />
               {errors.email && (
-                <p className="text-red-300 text-xs mt-1">{errors.email.message}</p>
+                <p className="text-red-300 text-xs mt-1">
+                  {errors.email.message}
+                </p>
               )}
             </div>
 
@@ -159,17 +174,19 @@ const Register: React.FC = () => {
                 type="password"
                 placeholder="Password"
                 className="bg-white/10 border-white/10 text-white placeholder:text-white/60 h-12 pr-10"
-                {...register("password", { 
+                {...register("password", {
                   required: "Password is required",
                   minLength: {
                     value: 8,
-                    message: "Password must be at least 8 characters"
-                  }
+                    message: "Password must be at least 8 characters",
+                  },
                 })}
               />
               <Key className="absolute right-3 top-3 h-5 w-5 text-white/60 pointer-events-none" />
               {errors.password && (
-                <p className="text-red-300 text-xs mt-1">{errors.password.message}</p>
+                <p className="text-red-300 text-xs mt-1">
+                  {errors.password.message}
+                </p>
               )}
             </div>
 
@@ -178,11 +195,15 @@ const Register: React.FC = () => {
                 type="text"
                 placeholder="Organization Name"
                 className="bg-white/10 border-white/10 text-white placeholder:text-white/60 h-12 pr-10"
-                {...register("organizationName", { required: "Organization name is required" })}
+                {...register("organizationName", {
+                  required: "Organization name is required",
+                })}
               />
               <Building className="absolute right-3 top-3 h-5 w-5 text-white/60 pointer-events-none" />
               {errors.organizationName && (
-                <p className="text-red-300 text-xs mt-1">{errors.organizationName.message}</p>
+                <p className="text-red-300 text-xs mt-1">
+                  {errors.organizationName.message}
+                </p>
               )}
             </div>
 
@@ -191,17 +212,21 @@ const Register: React.FC = () => {
                 <Input
                   type="date"
                   className="bg-white/10 border-white/10 text-white placeholder:text-white/60 h-12 pr-10"
-                  {...register("dateOfBirth", { required: "Date of birth is required" })}
+                  {...register("dateOfBirth", {
+                    required: "Date of birth is required",
+                  })}
                 />
                 <Calendar className="absolute right-3 top-3 h-5 w-5 text-white/60 pointer-events-none" />
               </div>
               {errors.dateOfBirth && (
-                <p className="text-red-300 text-xs mt-1">{errors.dateOfBirth.message}</p>
+                <p className="text-red-300 text-xs mt-1">
+                  {errors.dateOfBirth.message}
+                </p>
               )}
             </div>
 
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               className="w-full h-12 bg-white hover:bg-white/90 text-[#3498DB] font-medium shadow-md"
               disabled={isLoading}
             >
@@ -224,8 +249,8 @@ const Register: React.FC = () => {
         <div className="text-center mt-6">
           <p className="text-white/80">
             Already have an account?{" "}
-            <a 
-              href="/" 
+            <a
+              href="/"
               className="text-white hover:underline font-medium"
               onClick={(e) => {
                 e.preventDefault();
