@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Clock, Calendar, User } from "lucide-react";
+import { Clock, Calendar, User, Building, Key } from "lucide-react";
 import { 
   Select,
   SelectContent,
@@ -20,6 +20,8 @@ type RegistrationFormData = {
   role: string;
   email: string;
   dateOfBirth: string;
+  password: string;
+  organizationName: string;
 };
 
 const Register: React.FC = () => {
@@ -33,6 +35,8 @@ const Register: React.FC = () => {
       role: "",
       email: "",
       dateOfBirth: "",
+      password: "",
+      organizationName: "",
     }
   });
 
@@ -147,6 +151,38 @@ const Register: React.FC = () => {
               />
               {errors.email && (
                 <p className="text-red-300 text-xs mt-1">{errors.email.message}</p>
+              )}
+            </div>
+
+            <div className="relative">
+              <Input
+                type="password"
+                placeholder="Password"
+                className="bg-white/10 border-white/10 text-white placeholder:text-white/60 h-12 pr-10"
+                {...register("password", { 
+                  required: "Password is required",
+                  minLength: {
+                    value: 8,
+                    message: "Password must be at least 8 characters"
+                  }
+                })}
+              />
+              <Key className="absolute right-3 top-3 h-5 w-5 text-white/60 pointer-events-none" />
+              {errors.password && (
+                <p className="text-red-300 text-xs mt-1">{errors.password.message}</p>
+              )}
+            </div>
+
+            <div className="relative">
+              <Input
+                type="text"
+                placeholder="Organization Name"
+                className="bg-white/10 border-white/10 text-white placeholder:text-white/60 h-12 pr-10"
+                {...register("organizationName", { required: "Organization name is required" })}
+              />
+              <Building className="absolute right-3 top-3 h-5 w-5 text-white/60 pointer-events-none" />
+              {errors.organizationName && (
+                <p className="text-red-300 text-xs mt-1">{errors.organizationName.message}</p>
               )}
             </div>
 
