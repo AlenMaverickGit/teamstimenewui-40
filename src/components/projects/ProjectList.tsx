@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
@@ -34,7 +35,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Progress } from "@/components/ui/progress";
 
 // Move getProgressColor function outside of component to make it accessible everywhere
 const getProgressColor = (progress: number) => {
@@ -171,7 +171,6 @@ const ProjectList: React.FC = () => {
             <div className="divide-y divide-border">
               {filteredProjects.map((project) => (
                 <div key={project.id} className="p-4 space-y-3">
-                  {/* Project name and button */}
                   <div className="flex items-center justify-between">
                     <Link
                       to={`/projects/${project.id}`}
@@ -213,18 +212,19 @@ const ProjectList: React.FC = () => {
                       </span>
                     </div>
                     
-                    {/* Improved Progress bar */}
-                    <div className="flex items-center gap-3">
-                      <div className="w-full flex-1">
-                        <Progress 
-                          value={project.progress} 
-                          className="h-3"
-                          indicatorClassName={getProgressColor(project.progress).replace("text-white", "")}
-                        />
+                    {/* Progress bar */}
+                    <div className="flex items-center gap-2">
+                      <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div
+                          className={`h-2 rounded-full ${getProgressColor(
+                            project.progress
+                          )}`}
+                          style={{ width: `${project.progress}%` }}
+                        ></div>
                       </div>
                       <Badge
                         variant="outline"
-                        className={`${getProgressColor(project.progress)} min-w-[40px] text-center whitespace-nowrap hidden sm:inline-flex`}
+                        className={`${getProgressColor(project.progress)}`}
                       >
                         {project.progress}%
                       </Badge>
@@ -308,17 +308,18 @@ const ProjectRow: React.FC<ProjectRowProps> = ({ project }) => {
         </div>
       </TableCell>
       <TableCell>
-        <div className="flex items-center gap-3">
-          <div className="w-full flex-1">
-            <Progress 
-              value={project.progress} 
-              className="h-3"
-              indicatorClassName={getProgressColor(project.progress).replace("text-white", "")}
-            />
+        <div className="flex items-center gap-2">
+          <div className="w-full max-w-24 bg-gray-200 rounded-full h-2">
+            <div
+              className={`h-2 rounded-full ${getProgressColor(
+                project.progress
+              )}`}
+              style={{ width: `${project.progress}%` }}
+            ></div>
           </div>
           <Badge
             variant="outline"
-            className={`${getProgressColor(project.progress)} min-w-[40px] text-center whitespace-nowrap hidden sm:inline-flex`}
+            className={`${getProgressColor(project.progress)}`}
           >
             {project.progress}%
           </Badge>
