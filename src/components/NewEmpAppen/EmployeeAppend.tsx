@@ -1,8 +1,10 @@
+
 import React from "react";
 import { TableRow, TableCell } from "@/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { getAvatarColor } from "@/utils/userStyles";
 
 export interface Employee {
   employeeId: number;
@@ -63,6 +65,9 @@ const EmployeeAppend: React.FC<EmployeeAppendProps> = ({ employee }) => {
     fetchPhotoAndDesignation();
   }, [employee.employeeId]);
 
+  // Get initials for avatar fallback
+  const initials = employee.name?.slice(0, 2).toUpperCase();
+
   return (
     <TableRow>
       <TableCell>
@@ -71,8 +76,8 @@ const EmployeeAppend: React.FC<EmployeeAppendProps> = ({ employee }) => {
             {photo ? (
               <AvatarImage src={photo} alt={employee.name} />
             ) : (
-              <AvatarFallback>
-                {employee.name?.slice(0, 2).toUpperCase()}
+              <AvatarFallback className={getAvatarColor(initials)}>
+                {initials}
               </AvatarFallback>
             )}
           </Avatar>
