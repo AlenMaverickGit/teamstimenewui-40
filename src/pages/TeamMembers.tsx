@@ -43,7 +43,7 @@ const TeamMembersPage: React.FC = () => {
     // </div>
 
     <div className="px-2 sm:container sm:mx-auto py-6">
-      <div className="flex items-center justify-between flex-wrap gap-4 mb-6">
+      <div className="flex items-center justify-between gap-4 mb-6">
         <BreadcrumbNav />
 
         <div className="flex gap-2">
