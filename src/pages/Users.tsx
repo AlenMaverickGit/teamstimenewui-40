@@ -185,10 +185,10 @@ const UsersPage: React.FC = () => {
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                          <DropdownMenuItem>Edit user</DropdownMenuItem>
-                          <DropdownMenuItem>Change role</DropdownMenuItem>
+                          <DropdownMenuItem>View User</DropdownMenuItem>
+                          <DropdownMenuItem>Edit User</DropdownMenuItem>
                           <DropdownMenuItem className="text-destructive">
-                            Remove user
+                            Deactivate User
                           </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
