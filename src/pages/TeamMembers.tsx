@@ -4,8 +4,14 @@ import BreadcrumbNav from "@/components/BreadcrumbNav";
 import { Button } from "@/components/ui/button";
 import { UserPlus } from "lucide-react";
 import { UserCog } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const TeamMembersPage: React.FC = () => {
+  const navigate = useNavigate();
+
+  const handleManageUsersClick = () => {
+    navigate("/users");
+  };
   return (
     // <div className="px-2 sm:container sm:mx-auto py-6">
     //   <BreadcrumbNav />
@@ -47,14 +53,17 @@ const TeamMembersPage: React.FC = () => {
         <BreadcrumbNav />
 
         <div className="flex gap-2">
-          <Button className="h-8 px-3 py-1.5 text-sm gap-2 shadow-sm transition-all hover:translate-y-[-1px]">
+          <Button
+            onClick={handleManageUsersClick}
+            className="h-8 px-3 py-1.5 text-sm gap-2 shadow-sm transition-all hover:translate-y-[-1px]"
+          >
             <UserCog className="h-4 w-4" />
             Manage Users
           </Button>
-          <Button className="h-8 px-3 py-1.5 text-sm gap-2 shadow-sm transition-all hover:translate-y-[-1px]">
+          {/* <Button className="h-8 px-3 py-1.5 text-sm gap-2 shadow-sm transition-all hover:translate-y-[-1px]">
             <UserPlus className="h-4 w-4" />
             Add Team Member
-          </Button>
+          </Button> */}
         </div>
       </div>
 
