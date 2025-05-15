@@ -11,7 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { ArrowLeft, Calendar, Clock, User, Users } from "lucide-react";
+import { Calendar, Clock, User, Users } from "lucide-react";
 import {
   getProjectById,
   getTasksByProjectId,
@@ -25,12 +25,14 @@ import {
   getStatusText,
 } from "@/utils/timeUtils";
 import TaskCard from "@/components/tasks/TaskCard";
+import TaskFormDialog from "@/components/tasks/TaskFormDialog";
 import { format } from "date-fns";
 
 const ProjectDetails: React.FC = () => {
   const { projectId } = useParams<{ projectId: string }>();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("overview");
+  const [isTaskFormOpen, setIsTaskFormOpen] = useState(false);
 
   if (!projectId) {
     return (
@@ -255,7 +257,7 @@ const ProjectDetails: React.FC = () => {
         <TabsContent value="tasks" className="mt-6">
           <div className="flex justify-between mb-4">
             <h2 className="text-xl font-bold">Project Tasks</h2>
-            <Button>Add Task</Button>
+            <Button onClick={() => setIsTaskFormOpen(true)}>Add Task</Button>
           </div>
 
           <div className="grid grid-cols-1 gap-4">
@@ -304,6 +306,13 @@ const ProjectDetails: React.FC = () => {
           </div>
         </TabsContent>
       </Tabs>
+
+      {/* Task Form Dialog */}
+      <TaskFormDialog
+        open={isTaskFormOpen}
+        onOpenChange={setIsTaskFormOpen}
+        projectId={projectId}
+      />
     </div>
   );
 };
